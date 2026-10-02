@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NetAuto Pro — Network Intelligence Platform</title>
+<style>
+:root{--bg:#eef2f6;--panel:#fff;--nav:#0b1f33;--accent:#245b82;--accent2:#3178a8;--text:#142333;--muted:#68788a;--border:#d7e0e8;--ok:#16845b;--warn:#b7791f;--bad:#c24141;--info:#3977a8;--shadow:0 8px 24px #102a4312}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,Arial,sans-serif}header{background:var(--nav);color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 2px 14px #0003}.bar{max-width:1500px;margin:auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:19px;font-weight:800}.brand span{font-size:11px;color:#a9c3d8;margin-left:5px}.status{font-size:12px;padding:7px 11px;border-radius:18px;background:#ffffff15}.status.ok{background:#16845b33}.wrap{max-width:1500px;margin:auto;padding:20px}.hero{background:linear-gradient(120deg,#102b46,#245f87);color:#fff;border-radius:16px;padding:24px;box-shadow:var(--shadow);margin-bottom:14px}.hero h1{margin:0 0 6px;font-size:25px}.hero p{margin:0;color:#dcecf8}.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.quick button{background:#ffffff16;border-color:#ffffff30;color:#fff}.cards{display:grid;grid-template-columns:repeat(8,minmax(105px,1fr));gap:10px;margin:14px 0}.stat,.panel{background:var(--panel);border:1px solid var(--border);border-radius:13px;box-shadow:var(--shadow)}.stat{padding:13px}.stat b{font-size:23px;display:block;margin-top:3px}.muted,small{color:var(--muted)}.panel{padding:18px;margin:14px 0}.panel h2{font-size:16px;margin:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}input,select,textarea,button{font:inherit;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fff;color:var(--text)}input,select{min-width:145px}textarea{width:100%;resize:vertical}button{background:var(--accent);color:#fff;border-color:var(--accent);cursor:pointer;font-weight:700}button:hover{background:var(--accent2)}button.secondary{background:#eef4f8;color:var(--accent);border-color:#cbd9e5}button.danger{background:#fff;color:var(--bad);border-color:#efb5b5}.wide{flex:1;min-width:250px}pre{background:#0d1c2a;color:#e6eff6;border-radius:10px;padding:14px;min-height:65px;white-space:pre-wrap;overflow:auto}.notice{padding:11px 13px;border-radius:9px;background:#edf7f2;color:var(--ok);margin:10px 0}.warning{background:#fff8e8;color:#8a5a00}.error{background:#fff0f0;color:#a22b2b}.toast{position:fixed;right:20px;bottom:20px;background:#0b1f33;color:#fff;padding:12px 16px;border-radius:9px;box-shadow:var(--shadow);display:none;z-index:50}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.tab{background:#e4ebf1;color:#234a66;border-color:#d2dde6}.tab.active{background:var(--accent);color:#fff}.view{display:none}.view.active{display:block}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{padding:6px 9px;background:#edf4f8;color:#285572;border-radius:20px;font-size:12px}.graph{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.node{padding:12px;border:1px solid #b8cad8;border-radius:10px;background:#f8fbfd}.ai-summary{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}.score{font-size:34px;font-weight:850;text-align:center}.ai-card{border-left:4px solid var(--info);padding:12px;margin:8px 0;background:#f8fbfd;border-radius:7px}.ai-card.high{border-left-color:var(--bad)}.ai-card.medium{border-left-color:var(--warn)}.ai-card.low{border-left-color:var(--ok)}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid var(--border);padding:8px;text-align:left}th{background:#edf3f7}tbody tr:nth-child(even){background:#fafcfd}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px}.section-help{font-size:12px;color:var(--muted);margin:5px 0 12px}.kpi{font-size:12px;color:var(--muted)}.pill{display:inline-block;padding:4px 8px;border-radius:15px;font-size:12px;background:#edf4f8}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}.mono{font-family:Consolas,monospace}.hidden{display:none}@media(max-width:1050px){.cards{grid-template-columns:repeat(4,1fr)}.grid3{grid-template-columns:1fr 1fr}}@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}.cards{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.cards{grid-template-columns:repeat(2,1fr)}.wrap{padding:12px}.bar{padding:10px 12px}.ai-summary{grid-template-columns:1fr}}
+
+.topo-summary{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:9px;margin:10px 0 14px}.topo-kpi{border:1px solid var(--border);border-radius:10px;padding:10px;background:#f8fbfd}.topo-kpi b{display:block;font-size:19px}.topo-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.topo-tab{background:#eef4f8;color:#245b82;border-color:#cbd9e5}.topo-tab.active{background:var(--accent);color:#fff}.topo-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--muted);margin:8px 0}.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;border:1px solid #b8c7d2}.legend-dot.internet{background:#dcecff}.legend-dot.security{background:#fff0d2}.legend-dot.core{background:#dff4ea}.legend-dot.building{background:#e7e4ff}.legend-dot.floor{background:#edf3f7}.legend-line{display:inline-block;width:22px;border-top:2px solid #7890a2;margin-right:5px;vertical-align:middle}.topology-canvas{overflow:auto;border:1px solid var(--border);border-radius:12px;background:#fbfdff;min-height:260px;padding:10px}.topology-svg{display:block;margin:auto;min-width:900px}.topo-help-card{border:1px solid var(--border);border-radius:10px;background:#f8fbfd;padding:12px}.topo-help-card p{margin:6px 0 0;color:var(--muted);line-height:1.45}.topo-node-title{font-weight:800;font-size:13px}.topo-node-sub{font-size:10px;fill:#68788a}.topo-link{stroke:#7890a2;stroke-width:2}.topo-link.backup{stroke-dasharray:7 5}.topo-link-label{font-size:10px;fill:#5b6f80}.topo-table{min-width:760px}@media(max-width:900px){.topo-summary{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.topo-summary{grid-template-columns:repeat(2,1fr)}.topology-svg{min-width:760px}}
+
+.topo-config{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:12px;background:#fbfdff}.topo-config h3{margin:0 0 8px}.topo-note{font-size:12px;color:var(--muted);line-height:1.45}.topo-controls{display:flex;gap:8px;flex-wrap:wrap}.topo-node-label{font-size:11px;fill:#5b6f80}.topo-endpoint{fill:#f3f5f7}.topo-distribution{fill:#e9eefc}.topo-access{fill:#f1f7ec}.topo-count{font-size:10px;fill:#5b6f80}.topo-link-label-bg{fill:#fff;opacity:.92}.topo-warning{border:1px solid #e6c36a;background:#fff8df;border-radius:9px;padding:9px;margin:8px 0;color:#5e4a16}.topo-ok{border:1px solid #b8d8c4;background:#eefaf2;border-radius:9px;padding:9px;margin:8px 0;color:#245c3b}
+
+.subnet-grid,.def-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.config-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.config-box{background:#0d1c2a;color:#e6eff6;border-radius:10px;padding:14px;white-space:pre-wrap;overflow:auto;min-height:340px;font:12px Consolas,monospace}.locked{display:inline-block;padding:4px 8px;border-radius:14px;background:#eef1f4;color:#607182;font-size:11px;border:1px solid #d6dee5}.def-card{border:1px solid var(--border);border-radius:10px;padding:12px;background:#fbfdff}.def-card h3{margin:0 0 6px}.def-card p{margin:4px 0;color:var(--muted);line-height:1.4}.sev-high{border-left:4px solid var(--bad)}.sev-med{border-left:4px solid var(--warn)}.sev-low{border-left:4px solid var(--ok)}.verify-ok{color:var(--ok);font-weight:800}.verify-bad{color:var(--bad);font-weight:800}@media(max-width:900px){.subnet-grid,.def-grid,.config-grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.subnet-grid,.def-grid,.config-grid{grid-template-columns:1fr}}
+</style>
+<style>
+/* ===== v1.3 Floating AI + hardened automation UI ===== */
+#netautoAiFab{position:fixed;right:22px;bottom:22px;z-index:9998;width:58px;height:58px;border-radius:50%;border:1px solid #39bfff;background:#0b3150;color:#fff;font-size:25px;box-shadow:0 8px 30px #0008;cursor:pointer}
+#netautoAiFab:hover{transform:translateY(-2px);box-shadow:0 12px 34px #0009}
+#netautoAiPanel{position:fixed;right:22px;bottom:92px;z-index:9999;width:min(440px,calc(100vw - 30px));height:min(650px,calc(100vh - 120px));display:none;flex-direction:column;background:#081725;border:1px solid #27506c;border-radius:14px;box-shadow:0 20px 70px #000b;overflow:hidden}
+#netautoAiPanel.open{display:flex}
+.ai-float-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;background:#0b2235;border-bottom:1px solid #21435b}.ai-float-head b{font-size:14px}.ai-float-head small{display:block;color:#82a4ba;font-size:10px;margin-top:2px}
+.ai-float-body{padding:12px;overflow:auto;flex:1}.ai-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.ai-mode button{padding:7px 9px;font-size:11px}.ai-mode button.active{border-color:#3cbcff;background:#123e5d}
+.ai-chat-log{min-height:160px;max-height:270px;overflow:auto;border:1px solid #21435b;background:#06121d;border-radius:9px;padding:9px;margin-bottom:9px}.ai-msg{padding:8px 9px;border-radius:8px;margin:6px 0;font-size:11px;line-height:1.45}.ai-msg.bot{background:#102b40}.ai-msg.user{background:#164e78;margin-left:20px}.ai-risk{border-left:3px solid #ffca4d;padding:8px;background:#2a2411;margin:8px 0;font-size:11px}.ai-ok{border-left:3px solid #45df82;padding:8px;background:#0d281b;margin:8px 0;font-size:11px}
+.ai-float-foot{padding:10px;border-top:1px solid #21435b;background:#071522}.ai-float-foot textarea{width:100%;min-height:62px;resize:vertical}.ai-actions{display:flex;gap:6px;margin-top:7px}.ai-actions button{flex:1;font-size:11px}
+.agent-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border:1px solid #31536b;border-radius:20px;color:#a8c6d8;font-size:10px}.agent-pill.safe{border-color:#296340;color:#83e5a7}.agent-pill.warn{border-color:#7d6530;color:#ffd36b}
+.command-stage{border:1px solid #2b4f68;border-radius:10px;padding:10px;background:#071521;margin-top:10px}.command-stage h4{margin:0 0 6px}.command-stage p{margin:4px 0;color:#91adbf;font-size:11px}
+</style>
+
+<style id="netauto-modern-design">
+/* ===== NetAuto Pro v1.5 — UX/UI refresh ONLY ===== */
+:root{
+ --bg:#f4f7fb;--panel:#ffffff;--panel2:#f8fbff;--nav:#0a1728;--nav2:#102844;
+ --accent:#1769d1;--accent2:#0ea5e9;--accent3:#7c3aed;--text:#122033;--muted:#66788c;
+ --border:#dce5ef;--ok:#0f8a62;--warn:#c28119;--bad:#c23b4b;--info:#3178c6;
+ --shadow:0 10px 30px rgba(15,35,60,.08);--shadow2:0 22px 65px rgba(9,27,49,.16)
+}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 8% -10%,#dceeff 0,transparent 30%),radial-gradient(circle at 92% 0,#eee8ff 0,transparent 26%),var(--bg);color:var(--text);font:14px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(110deg,#071426,#102a47 60%,#123b62);box-shadow:0 4px 24px rgba(5,20,38,.22);backdrop-filter:blur(12px)}
+.bar{max-width:1600px;padding:13px 24px}.brand{letter-spacing:.1px}.brand:first-letter{color:#52d7ff}.brand span{color:#9cc7e8}.status{border:1px solid #ffffff1f;background:#ffffff10;box-shadow:inset 0 1px #ffffff12}.status.ok{background:#13b98118;color:#bdf7df}
+.wrap{max-width:1600px;padding:22px 24px 90px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#0b1e35 0%,#124b78 52%,#1767a1 100%);border:1px solid #ffffff16;border-radius:22px;padding:30px 32px;box-shadow:0 18px 50px rgba(12,50,84,.20)}
+.hero:before{content:"";position:absolute;width:260px;height:260px;right:-80px;top:-100px;border-radius:50%;background:radial-gradient(circle,#59d7ff45,transparent 68%);pointer-events:none}.hero:after{content:"";position:absolute;width:180px;height:180px;right:170px;bottom:-130px;border-radius:50%;background:radial-gradient(circle,#9c7bff32,transparent 68%);pointer-events:none}
+.hero h1{position:relative;font-size:29px;letter-spacing:-.6px}.hero p{position:relative;max-width:800px;color:#dceeff;font-size:13px}.quick{position:relative;gap:9px}.quick button{background:#ffffff12;border:1px solid #ffffff2c;border-radius:10px;padding:9px 13px;backdrop-filter:blur(8px);transition:.18s}.quick button:hover{transform:translateY(-1px);background:#ffffff1e;border-color:#ffffff50}
+.notice{border:1px solid #cfe0ef;background:linear-gradient(100deg,#f7fbff,#eef7ff);color:#31546f;box-shadow:0 4px 16px rgba(20,60,100,.04)}
+.cards{grid-template-columns:repeat(8,minmax(120px,1fr));gap:12px}.stat,.panel{border:1px solid rgba(210,222,235,.9);box-shadow:var(--shadow);transition:box-shadow .18s,transform .18s,border-color .18s}.stat:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(15,35,60,.11);border-color:#c5d7e9}.stat{background:linear-gradient(145deg,#fff,#f9fbfe);padding:15px}.stat b{font-size:25px;letter-spacing:-.4px}.kpi,.muted,small{color:#6d7f92}
+.tabs{position:sticky;top:64px;z-index:18;padding:8px;background:rgba(244,247,251,.88);border:1px solid #dce5ef;border-radius:15px;box-shadow:0 8px 24px rgba(15,35,60,.07);backdrop-filter:blur(14px);overflow-x:auto;scrollbar-width:thin}.tab{flex:0 0 auto;border:1px solid transparent;background:transparent;color:#52677c;border-radius:10px;padding:9px 11px;font-weight:750;transition:.16s}.tab:hover{background:#eaf2fa;color:#1a5d91;transform:translateY(-1px)}.tab.active{background:linear-gradient(135deg,#1769d1,#0b83bf);color:#fff;box-shadow:0 6px 18px rgba(23,105,209,.24)}
+.panel{background:rgba(255,255,255,.94);border-radius:16px;padding:19px}.panel:hover{border-color:#d1deeb}.panel-head{margin-bottom:15px}.panel h2{font-size:16px;letter-spacing:-.15px}label{display:block;font-size:11px;font-weight:800;color:#52677c;margin:0 0 5px}
+input,select,textarea,button{border-radius:10px;border-color:#d4e0eb;transition:border-color .15s,box-shadow .15s,transform .15s}input,select,textarea{background:#fbfdff}input:focus,select:focus,textarea:focus{outline:none;border-color:#5aa8dc;box-shadow:0 0 0 3px #5aa8dc1c;background:#fff}button{box-shadow:0 2px 6px rgba(15,35,60,.07)}button:hover{transform:translateY(-1px);box-shadow:0 5px 13px rgba(15,35,60,.11)}button.secondary{background:#f1f6fa;color:#245b82}.locked{background:#eef3f7;color:#5e7184;border-color:#d7e1ea;font-weight:800}
+.chip{background:#f1f6fb;border:1px solid #dce7f0;color:#2b5a79}.graph .node{background:linear-gradient(145deg,#fff,#f7fbff);box-shadow:0 5px 16px rgba(20,50,80,.06)}table{border-radius:12px;overflow:hidden}th{background:linear-gradient(180deg,#eef5fa,#e7f0f6);color:#3b556b;font-size:11px;text-transform:uppercase;letter-spacing:.35px}td{border-color:#e2e9f0}tbody tr:hover{background:#f3f8fc}.empty{background:linear-gradient(145deg,#fbfdff,#f6f9fc);border-color:#d8e4ee}
+.topo-config,.topology-canvas,.topo-help-card,.def-card{box-shadow:0 4px 14px rgba(20,50,80,.04)}.topology-canvas{background:linear-gradient(145deg,#fbfdff,#f3f8fc);border-color:#d5e2ed}
+.config-box{border:1px solid #203b52;box-shadow:inset 0 1px #ffffff0a,0 8px 22px rgba(7,24,40,.08);background:linear-gradient(145deg,#071421,#0c2134)}
+/* Floating IA: always visible, unmistakable, and consistent with the new visual language. */
+#netautoAiFab{right:28px;bottom:28px;width:auto;min-width:68px;height:56px;padding:0 17px;border-radius:18px;border:1px solid #7ee5ff66;background:linear-gradient(135deg,#0b2d4b,#1769d1 60%,#6d4ee8);color:#fff;font-size:15px;font-weight:850;letter-spacing:.15px;box-shadow:0 12px 34px rgba(15,74,125,.32),0 0 0 5px rgba(23,105,209,.07);display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s;animation:netautoPulse 3.2s ease-in-out infinite}
+#netautoAiFab:after{content:"Agente IA";font-size:12px}#netautoAiFab:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 42px rgba(15,74,125,.38),0 0 0 7px rgba(23,105,209,.08)}
+#netautoAiPanel{right:28px;bottom:96px;width:min(470px,calc(100vw - 28px));height:min(690px,calc(100vh - 112px));background:rgba(7,20,34,.96);border:1px solid #65cfff3b;border-radius:20px;box-shadow:0 28px 90px rgba(2,15,28,.42),0 0 0 1px #ffffff08;backdrop-filter:blur(18px)}
+.ai-float-head{padding:15px 16px;background:linear-gradient(120deg,#092039,#123d61);border-bottom:1px solid #ffffff12}.ai-float-head b{font-size:14px}.ai-float-head small{color:#9cc5df}.ai-float-head button{border:1px solid #ffffff18;background:#ffffff0b;color:#fff;padding:6px 9px}.ai-float-body{padding:13px}.ai-mode button{background:#ffffff08;border-color:#ffffff16;color:#c7d8e7}.ai-mode button.active{background:linear-gradient(135deg,#15537c,#1769d1);border-color:#59caff66;color:#fff}.agent-pill.safe{background:#0e3a2a;color:#91e8bd;border-color:#276c50}.ai-chat-log{background:#04101b;border-color:#21445d;border-radius:12px}.ai-msg{border:1px solid #ffffff08}.ai-msg.bot{background:linear-gradient(145deg,#102a40,#0c2032)}.ai-msg.user{background:linear-gradient(145deg,#16527b,#1b67a0)}.ai-float-foot{background:#081a2b;border-top:1px solid #ffffff10;padding:11px}.ai-float-foot textarea{background:#04111c;color:#e9f4fb;border-color:#21445d;border-radius:12px}.ai-actions button{border-radius:9px}.ai-actions button.secondary{background:#ffffff08;color:#b9d1e2;border-color:#ffffff14}
+@keyframes netautoPulse{0%,100%{box-shadow:0 12px 34px rgba(15,74,125,.32),0 0 0 5px rgba(23,105,209,.07)}50%{box-shadow:0 14px 38px rgba(15,74,125,.38),0 0 0 9px rgba(23,105,209,.035)}}
+/* Visual hierarchy for the most important modules */
+#inventario .panel:first-child{border-top:3px solid #1769d1}#ciberdefensa .panel:first-child{border-top:3px solid #c23b4b}#subnetting .panel:first-child{border-top:3px solid #7c3aed}#topologia .panel:first-child{border-top:3px solid #0f8a62}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(4,minmax(120px,1fr))}.tabs{top:60px}}@media(max-width:700px){.wrap{padding:14px 12px 80px}.hero{padding:23px 20px}.hero h1{font-size:23px}.cards{grid-template-columns:repeat(2,minmax(120px,1fr))}.tabs{position:sticky;top:58px}.panel{padding:14px}.quick button{flex:1}.grid2,.grid3,.config-grid{grid-template-columns:1fr}.topo-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.cards{grid-template-columns:1fr 1fr}.stat b{font-size:21px}#netautoAiFab{right:14px;bottom:14px;min-width:58px;height:52px;padding:0 12px;border-radius:16px}#netautoAiFab:after{content:"IA"}#netautoAiPanel{right:10px;bottom:78px;width:calc(100vw - 20px);height:calc(100vh - 92px)}}
+</style>
+
+<style id="netauto-v15-visual-overhaul">
+/* =========================================================
+   NetAuto Pro v1.5 — VISUAL OVERHAUL ONLY
+   IP Planning + Topology logic: untouched.
+   ========================================================= */
+:root{
+  --bg:#060b13;--panel:#0b1422;--panel2:#0e1a2b;--nav:#07101d;
+  --text:#eaf4ff;--muted:#91a6bc;--border:#1d3148;--accent:#5ce1e6;
+  --accent2:#7b61ff;--ok:#4ade9a;--warn:#ffc857;--bad:#ff6577;--info:#69a8ff;
+  --shadow:0 18px 55px rgba(0,0,0,.28)
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at 10% -5%,rgba(92,225,230,.12),transparent 28%),
+    radial-gradient(circle at 90% 8%,rgba(123,97,255,.12),transparent 30%),
+    linear-gradient(180deg,#050a12 0%,#08111d 38%,#0a1420 100%);
+  color:var(--text);min-height:100vh
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.23;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
+header{background:rgba(5,12,22,.78)!important;border-bottom:1px solid rgba(113,180,255,.13);backdrop-filter:blur(22px);box-shadow:0 10px 35px rgba(0,0,0,.28)!important}
+.bar{max-width:1580px;padding:14px 24px}
+.brand{font-size:20px;letter-spacing:.2px;display:flex;align-items:center;gap:9px}.brand:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent);display:inline-block}.brand span{color:#7892aa!important}
+.status{border:1px solid rgba(92,225,230,.2);background:rgba(92,225,230,.07)!important;color:#bfeef0;padding:8px 12px}
+.wrap{max-width:1580px;padding:24px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(13,35,58,.98),rgba(10,25,43,.96) 52%,rgba(28,22,61,.96));border:1px solid rgba(105,168,255,.18);border-radius:24px;padding:34px;box-shadow:0 30px 90px rgba(0,0,0,.28);min-height:205px}
+.hero:before{content:"";position:absolute;width:360px;height:360px;right:-120px;top:-190px;border-radius:50%;background:radial-gradient(circle,rgba(92,225,230,.25),transparent 65%);pointer-events:none}.hero:after{content:"";position:absolute;width:260px;height:260px;right:120px;bottom:-220px;border-radius:50%;background:radial-gradient(circle,rgba(123,97,255,.22),transparent 65%);pointer-events:none}
+.hero h1{font-size:34px;letter-spacing:-1px;margin-bottom:8px}.hero p{max-width:850px;color:#a9bfd3;font-size:14px;line-height:1.6}.quick{position:relative;z-index:2;margin-top:22px}.quick button{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:12px;padding:10px 13px}.quick button:hover{background:rgba(92,225,230,.1)!important;border-color:rgba(92,225,230,.35)!important;transform:translateY(-1px)}
+.cards{gap:12px;margin:16px 0}.stat,.panel{background:linear-gradient(180deg,rgba(14,26,43,.94),rgba(9,19,32,.94))!important;border:1px solid rgba(126,170,208,.14)!important;box-shadow:var(--shadow)!important;border-radius:17px}.stat{padding:16px;position:relative;overflow:hidden}.stat:after{content:"";position:absolute;inset:auto 0 0 0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.55}.stat b{font-size:26px;color:#f4fbff}.kpi,.muted,small{color:var(--muted)!important}
+.panel{padding:21px;margin:16px 0}.panel-head{margin-bottom:16px}.panel h2{font-size:17px;color:#f3f8ff}.section-help{color:#8299af!important}
+.tabs{position:sticky;top:61px;z-index:19;margin:16px 0;padding:7px;background:rgba(7,15,26,.78);border:1px solid rgba(111,159,202,.14);border-radius:15px;backdrop-filter:blur(18px);box-shadow:0 12px 35px rgba(0,0,0,.18);overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;background:rgba(255,255,255,.035)!important;color:#9db2c7!important;border-color:rgba(126,170,208,.12)!important;border-radius:10px;padding:9px 12px;transition:.18s}.tab:hover{color:#eaf7ff!important;background:rgba(92,225,230,.08)!important;border-color:rgba(92,225,230,.25)!important}.tab.active{background:linear-gradient(135deg,#1a6c79,#4b3c99)!important;color:#fff!important;border-color:rgba(151,239,255,.38)!important;box-shadow:0 7px 20px rgba(50,117,155,.2)}
+input,select,textarea{background:#081321!important;color:#e7f1fb!important;border-color:#1e3850!important;border-radius:10px!important}input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(92,225,230,.65)!important;box-shadow:0 0 0 3px rgba(92,225,230,.09)}button{border-radius:10px;background:linear-gradient(135deg,#166a78,#4651a5)!important;border-color:rgba(127,226,255,.24)!important;box-shadow:0 6px 18px rgba(22,90,120,.16);transition:transform .18s,box-shadow .18s,filter .18s}button:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 10px 24px rgba(22,90,120,.23)}button.secondary{background:rgba(255,255,255,.045)!important;color:#b9d2e7!important;border-color:#29445b!important}.danger{background:rgba(255,101,119,.08)!important;color:#ff9aaa!important;border-color:rgba(255,101,119,.3)!important}
+.notice{background:rgba(74,222,154,.07)!important;color:#9cebc7!important;border:1px solid rgba(74,222,154,.16)}.warning{background:rgba(255,200,87,.07)!important;color:#ffd77b!important;border-color:rgba(255,200,87,.16)}.error{background:rgba(255,101,119,.07)!important;color:#ff9aaa!important;border-color:rgba(255,101,119,.18)}
+.chip,.pill{background:rgba(105,168,255,.08)!important;color:#a9d2f4!important;border:1px solid rgba(105,168,255,.12)}
+.graph .node,.def-card,.topo-help-card,.topo-kpi,.topo-config{background:rgba(10,23,38,.78)!important;border-color:rgba(126,170,208,.14)!important}.empty{border-color:#29435a!important;color:#7e96ac!important;background:rgba(255,255,255,.018)}
+table{color:#dce9f4}th,td{border-color:#1e3449!important}th{background:#102033!important;color:#bcd0e2}tbody tr:nth-child(even){background:rgba(255,255,255,.018)}tbody tr:hover{background:rgba(92,225,230,.045)}
+pre,.config-box{background:#050c15!important;border:1px solid #172c40;color:#d9e9f7;box-shadow:inset 0 0 30px rgba(0,0,0,.18)}
+.topology-canvas{background:#07111d!important;border-color:#20364b!important}.topo-note,.topo-help-card p{color:#8197ad!important}.locked{background:rgba(255,255,255,.04)!important;color:#8296aa!important;border-color:#294054!important}
+/* floating AI — independent of active view */
+#netautoAiFab{
+ position:fixed!important;right:26px!important;bottom:26px!important;z-index:2147483000!important;
+ width:76px!important;height:76px!important;padding:0!important;border-radius:24px!important;
+ border:1px solid rgba(157,247,255,.55)!important;
+ background:linear-gradient(145deg,#102f45 0%,#126c82 48%,#5a3fb5 100%)!important;
+ color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ font-size:0!important;box-shadow:0 20px 45px rgba(0,0,0,.42),0 0 0 1px rgba(255,255,255,.06) inset,0 0 36px rgba(74,211,230,.18)!important;
+ cursor:pointer!important;isolation:isolate;animation:aiFloat 4s ease-in-out infinite;overflow:visible!important
+}
+#netautoAiFab:before{content:"✦";font-size:29px;line-height:1;filter:drop-shadow(0 0 9px rgba(180,255,255,.8));position:relative;z-index:2}
+#netautoAiFab:after{content:"IA"!important;position:absolute!important;right:-8px!important;top:-8px!important;min-width:25px!important;height:25px!important;padding:0 6px!important;border-radius:99px!important;display:flex!important;align-items:center!important;justify-content:center!important;font:800 10px/1 system-ui!important;letter-spacing:.4px;color:#07111c!important;background:#9df7ff!important;border:2px solid #07111c!important;box-shadow:0 4px 16px rgba(92,225,230,.35)!important}
+#netautoAiFab{outline:none!important}#netautoAiFab:hover{transform:translateY(-5px) scale(1.035)!important;box-shadow:0 25px 55px rgba(0,0,0,.48),0 0 45px rgba(92,225,230,.26)!important}
+#netautoAiFab:focus-visible{box-shadow:0 0 0 4px rgba(92,225,230,.22),0 20px 45px rgba(0,0,0,.42)!important}
+#netautoAiPanel{
+ position:fixed!important;right:26px!important;bottom:116px!important;z-index:2147482999!important;
+ width:min(480px,calc(100vw - 32px))!important;height:min(720px,calc(100vh - 145px))!important;
+ display:none;flex-direction:column;overflow:hidden!important;border-radius:24px!important;
+ background:linear-gradient(180deg,rgba(8,20,34,.98),rgba(5,13,23,.99))!important;
+ border:1px solid rgba(121,217,255,.24)!important;box-shadow:0 35px 100px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.03) inset,0 0 65px rgba(76,164,255,.08)!important;
+ backdrop-filter:blur(25px)!important
+}
+#netautoAiPanel.open{display:flex!important;animation:aiPanelIn .22s ease-out}.ai-float-head{padding:17px 18px!important;background:linear-gradient(135deg,rgba(17,51,73,.98),rgba(32,24,66,.98))!important;border-bottom:1px solid rgba(135,214,255,.14)!important}.ai-float-head b{font-size:15px!important}.ai-float-head small{color:#8fb1c8!important}.ai-float-head button{width:34px;height:34px;padding:0!important;border-radius:10px!important;background:rgba(255,255,255,.06)!important}
+.ai-float-body{padding:14px!important}.ai-mode{padding:4px;background:rgba(255,255,255,.025);border:1px solid rgba(126,170,208,.11);border-radius:13px}.ai-mode button{background:transparent!important;border-color:transparent!important;box-shadow:none!important}.ai-mode button.active{background:linear-gradient(135deg,#155d6b,#463c8f)!important;border-color:rgba(146,236,255,.25)!important}.agent-pill.safe{margin-left:auto;align-self:center;color:#79e6ad;background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.15);border-radius:99px;padding:6px 8px;font-size:10px}
+#netautoAiStatus{font-size:11px;line-height:1.5}.ai-chat-log{background:#040b13!important;border-color:#1b344a!important;border-radius:14px!important;max-height:none!important;min-height:210px!important;flex:1}.ai-msg{border:1px solid rgba(126,170,208,.08);border-radius:12px!important}.ai-msg.bot{background:linear-gradient(135deg,rgba(16,49,67,.82),rgba(18,25,48,.82))!important}.ai-msg.user{background:linear-gradient(135deg,#154e6f,#35327a)!important}.ai-float-foot{padding:12px 14px!important;background:rgba(3,10,18,.72)!important;border-top:1px solid rgba(126,170,208,.12)!important}.ai-float-foot textarea{min-height:76px!important}.ai-actions{display:flex;gap:7px;margin-top:8px}.ai-actions button{flex:1}.ai-risk{background:rgba(255,200,87,.07)!important;border-color:rgba(255,200,87,.18)!important}.ai-ok{background:rgba(74,222,154,.06)!important;border-color:rgba(74,222,154,.16)!important}
+@keyframes aiFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes aiPanelIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:900px){.wrap{padding:16px}.hero{padding:25px}.hero h1{font-size:29px}.tabs{top:58px}.cards{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.bar{padding:10px 14px}.brand{font-size:16px}.brand span{display:none}.status{font-size:10px}.wrap{padding:10px}.hero{border-radius:19px;padding:22px;min-height:0}.hero h1{font-size:25px}.tabs{top:52px;margin:10px 0}.cards{grid-template-columns:repeat(2,1fr)}#netautoAiFab{right:14px!important;bottom:14px!important;width:62px!important;height:62px!important;border-radius:20px!important}#netautoAiPanel{right:10px!important;bottom:88px!important;width:calc(100vw - 20px)!important;height:calc(100vh - 104px)!important;border-radius:20px!important}.agent-pill.safe{display:none}.ai-float-head{padding:13px}.ai-float-body{padding:10px}.ai-actions{flex-wrap:wrap}.ai-actions button{min-width:30%}}
+</style>
+<style id="netauto-final-ai-ui">
+/* ===== FINAL IA LAYER — UI ONLY. CORE MODULES UNCHANGED ===== */
+#ia{display:none!important}
+#netautoAiFab{position:fixed!important;right:26px!important;bottom:24px!important;z-index:2147483646!important;width:74px!important;height:74px!important;min-width:74px!important;padding:0!important;border-radius:24px!important;border:1px solid rgba(157,247,255,.72)!important;background:radial-gradient(circle at 30% 25%,#79f7ff 0 7%,#1c9ed8 23%,#244eaf 55%,#251d62 100%)!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 18px 48px rgba(0,0,0,.48),0 0 0 1px rgba(157,247,255,.18),0 0 42px rgba(72,211,255,.24)!important;overflow:visible!important;isolation:isolate!important;transition:transform .22s ease,box-shadow .22s ease!important;animation:netautoAiFloat 4s ease-in-out infinite!important}
+#netautoAiFab:before{content:'✦'!important;font-size:31px!important;line-height:1!important;position:relative!important;z-index:3!important;color:#fff!important;text-shadow:0 0 15px rgba(255,255,255,.85)!important}
+#netautoAiFab:after{content:'AI'!important;position:absolute!important;right:-7px!important;top:-7px!important;width:28px!important;height:28px!important;min-width:28px!important;padding:0!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;font:900 10px/1 Arial,sans-serif!important;letter-spacing:.5px!important;color:#06121d!important;background:#a7fbff!important;border:2px solid #071522!important;box-shadow:0 5px 16px rgba(65,225,255,.42)!important}
+#netautoAiFab:hover{transform:translateY(-6px) scale(1.06)!important;box-shadow:0 25px 60px rgba(0,0,0,.52),0 0 0 7px rgba(92,225,230,.08),0 0 58px rgba(72,211,255,.38)!important}
+#netautoAiFab:focus-visible{outline:none!important;box-shadow:0 0 0 4px rgba(167,251,255,.25),0 25px 60px rgba(0,0,0,.52)!important}
+#netautoAiFab::marker{display:none}
+#netautoAiPanel{position:fixed!important;right:26px!important;bottom:112px!important;z-index:2147483645!important;width:min(500px,calc(100vw - 34px))!important;height:min(730px,calc(100vh - 132px))!important;display:none!important;flex-direction:column!important;background:linear-gradient(160deg,rgba(7,20,34,.985),rgba(10,16,37,.985))!important;border:1px solid rgba(122,226,255,.24)!important;border-radius:24px!important;box-shadow:0 32px 100px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.04),0 0 55px rgba(67,203,255,.08)!important;backdrop-filter:blur(22px)!important;overflow:hidden!important}
+#netautoAiPanel.open{display:flex!important;animation:netautoAiPanelIn .2s ease-out both!important}
+#netautoAiPanel .ai-float-head{background:linear-gradient(135deg,rgba(15,57,78,.98),rgba(34,25,73,.98))!important;padding:18px 20px!important}
+#netautoAiPanel .ai-float-head b{font-size:16px!important}
+#netautoAiPanel .ai-float-head small{display:block!important;margin-top:3px!important;color:#9bb9ca!important}
+#netautoAiPanel .ai-float-body{padding:13px!important;display:flex!important;flex-direction:column!important;gap:10px!important;min-height:0!important;flex:1!important}
+#netautoAiPanel .ai-mode{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:7px!important}
+#netautoAiPanel .ai-mode button{padding:10px 8px!important;border-radius:12px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(137,196,222,.12)!important}
+#netautoAiPanel .ai-mode button.active{background:linear-gradient(135deg,rgba(40,167,210,.28),rgba(93,71,210,.34))!important;border-color:rgba(133,229,255,.42)!important}
+#netautoAiPanel .ai-chat-log{flex:1!important;min-height:220px!important;overflow:auto!important;background:rgba(2,9,17,.58)!important;border:1px solid rgba(100,164,198,.13)!important;border-radius:16px!important;padding:12px!important}
+#netautoAiPanel .ai-float-foot{background:rgba(2,9,17,.62)!important;padding:13px!important}
+#netautoAiPanel #netautoAiInput{min-height:78px!important;resize:vertical!important;border-radius:14px!important}
+#netautoAiPanel .ai-actions{display:grid!important;grid-template-columns:1.25fr 1fr 1fr!important;gap:7px!important}
+.netauto-ai-capabilities{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:2px}
+.netauto-ai-capabilities button{font-size:10px!important;padding:8px 5px!important;border-radius:10px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(137,196,222,.10)!important;color:#b8cede!important;cursor:pointer}
+.netauto-ai-capabilities button:hover{background:rgba(82,205,235,.10)!important;border-color:rgba(133,229,255,.28)!important;color:#fff!important}
+.netauto-ai-orb-label{position:absolute;right:88px;bottom:17px;white-space:nowrap;padding:8px 11px;border-radius:10px;background:rgba(5,15,25,.94);border:1px solid rgba(133,229,255,.18);color:#dffaff;font:700 11px/1 Arial,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.32);opacity:0;transform:translateX(8px);pointer-events:none;transition:.18s}
+#netautoAiFab:hover .netauto-ai-orb-label{opacity:1;transform:none}
+@keyframes netautoAiFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes netautoAiPanelIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:560px){#netautoAiFab{right:14px!important;bottom:14px!important;width:64px!important;height:64px!important;min-width:64px!important;border-radius:20px!important}#netautoAiPanel{right:10px!important;bottom:88px!important;width:calc(100vw - 20px)!important;height:calc(100vh - 102px)!important;border-radius:20px!important}.netauto-ai-capabilities{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<style id="netauto-final-visual-fix">
+:root{
+ --bg:#07111d;--panel:#0d1a29;--panel2:#101f31;--nav:#06101b;
+ --accent:#31c7e8;--accent2:#5f6ee8;--text:#e8f3fb;--muted:#a8bdcf;
+ --border:#25435b;--ok:#69e0a4;--warn:#ffd36b;--bad:#ff7f8d;--info:#70cfff;
+ --shadow:0 18px 55px rgba(0,0,0,.28)
+}
+html{background:#07111d;scroll-behavior:smooth}
+body{background:radial-gradient(circle at 12% -12%,rgba(46,198,232,.13),transparent 28%),radial-gradient(circle at 88% 0,rgba(98,80,232,.15),transparent 30%),linear-gradient(145deg,#06101a,#091827 55%,#0a1321)!important;color:var(--text)!important;min-height:100vh}
+header{background:rgba(4,13,23,.92)!important;border-bottom:1px solid rgba(111,204,245,.13)!important;backdrop-filter:blur(18px);z-index:100!important}
+.brand{color:#f4fbff!important}.brand span{color:#9ec6df!important}.status{color:#cfe8f5!important}
+.wrap{max-width:1600px!important}
+.hero{background:linear-gradient(135deg,rgba(13,48,71,.98),rgba(35,37,91,.98) 58%,rgba(12,24,48,.98))!important;border:1px solid rgba(105,215,255,.18);box-shadow:0 22px 70px rgba(0,0,0,.24)!important}
+.hero p,.section-help,.topo-note,.topo-help-card p{color:#b9cfdf!important}
+.panel,.stat{background:linear-gradient(145deg,rgba(13,28,44,.97),rgba(10,22,36,.97))!important;border-color:#23425a!important;color:#e7f1f8!important;box-shadow:0 16px 45px rgba(0,0,0,.18)!important}
+.panel h2,.panel h3,.panel h4,.stat b{color:#f0f7fc!important}
+.muted,small,.kpi{color:#a9bed0!important}
+label{color:#d4e5ef!important;font-weight:650}
+input,select,textarea{background:#071522!important;color:#e8f4fb!important;border-color:#294b64!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+input::placeholder,textarea::placeholder{color:#718da5!important;opacity:1}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#42d4f3!important;box-shadow:0 0 0 3px rgba(66,212,243,.11)!important}
+button{background:linear-gradient(135deg,#168eae,#4854c7)!important;color:#fff!important;border-color:#4dcde8!important;box-shadow:0 8px 22px rgba(21,105,143,.18)}
+button:hover{filter:brightness(1.12);transform:translateY(-1px)}
+button.secondary,.tab,.topo-tab{background:#132538!important;color:#cfe0ec!important;border-color:#2a4961!important}
+button.secondary:hover,.tab:hover,.topo-tab:hover{background:#19334b!important;color:#fff!important}
+.tab.active,.topo-tab.active{background:linear-gradient(135deg,#168da9,#4e56c8)!important;color:#fff!important;border-color:#55d2eb!important}
+.chip,.pill,.locked{background:#12283a!important;color:#c9dfed!important;border-color:#294a62!important}
+.notice{background:rgba(21,102,74,.22)!important;color:#bff5d9!important;border:1px solid rgba(105,224,164,.34)!important}
+.warning,.topo-warning{background:rgba(125,88,20,.18)!important;color:#ffe3a1!important;border-color:rgba(255,211,107,.34)!important}
+.error{background:rgba(132,31,47,.18)!important;color:#ffb8c0!important;border-color:rgba(255,127,141,.34)!important}
+pre,.config-box{background:#050e17!important;color:#dff2ff!important;border:1px solid #1e394f}
+table{color:#dceaf3!important}th{background:#13283a!important;color:#eaf6fc!important;border-color:#2a4a61!important}td{border-color:#203d54!important}tbody tr:nth-child(even){background:rgba(255,255,255,.025)!important}
+.empty{color:#9db5c8!important;border-color:#2b4a61!important;background:rgba(255,255,255,.018)}
+/* Topology: light nodes + dark canvas, with deliberately high-contrast text. */
+.topology-canvas{background:linear-gradient(145deg,#06121f,#091a2a)!important;border-color:#274861!important;box-shadow:inset 0 0 50px rgba(24,128,177,.06)}
+.topo-kpi,.topo-help-card,.topo-config{background:rgba(12,29,45,.88)!important;border-color:#27465e!important;color:#dcebf4!important}
+.topo-kpi b{color:#f3f9fd!important}.topo-legend{color:#c3d5e2!important}.legend-line{border-color:#7ea8c2!important}
+.topology-svg .topo-node-title{fill:#102131!important;color:#102131!important;font-weight:900!important}
+.topology-svg .topo-node-sub{fill:#496276!important;color:#496276!important}
+.topology-svg>text:first-child{fill:#dff6ff!important;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.topology-svg .topo-link-label{fill:#bfe5f5!important;font-weight:800}
+.topology-svg text[fill="#566"],.topology-svg text[fill="#5b6f80"]{fill:#c1d5e2!important}
+.topology-svg text[fill="#68788a"]{fill:#496276!important}
+/* Real floating AI launcher — always in viewport, never a tab. */
+#netautoAiFab{position:fixed!important;right:26px!important;bottom:24px!important;z-index:2147483647!important;width:78px!important;height:78px!important;padding:0!important;border-radius:25px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:visible!important;background:radial-gradient(circle at 30% 25%,#8af8ff 0 5%,#29b9e1 24%,#4054ce 62%,#211c55 100%)!important;border:1px solid rgba(171,250,255,.85)!important;box-shadow:0 22px 55px rgba(0,0,0,.5),0 0 0 1px rgba(111,231,255,.22),0 0 42px rgba(63,210,255,.3)!important;cursor:pointer!important;isolation:isolate!important;animation:netautoFinalFloat 4s ease-in-out infinite!important}
+#netautoAiFab:before{content:''!important;position:absolute!important;inset:-8px!important;border-radius:31px!important;border:1px solid rgba(104,224,255,.25)!important;box-shadow:0 0 0 8px rgba(75,199,232,.035),0 0 38px rgba(70,209,255,.2)!important;z-index:-1!important}
+#netautoAiFab .netauto-ai-orb{font-size:31px!important;color:#fff!important;text-shadow:0 0 18px rgba(255,255,255,.9)!important;line-height:1!important;z-index:2!important}
+#netautoAiFab .netauto-ai-label{position:absolute!important;right:88px!important;bottom:14px!important;white-space:nowrap!important;padding:9px 12px!important;border-radius:12px!important;background:rgba(4,13,23,.96)!important;border:1px solid rgba(126,225,255,.22)!important;color:#e7fbff!important;font:800 12px/1 system-ui,sans-serif!important;opacity:0!important;transform:translateX(8px)!important;transition:.18s!important;pointer-events:none!important;box-shadow:0 12px 32px rgba(0,0,0,.38)!important}
+#netautoAiFab:hover .netauto-ai-label{opacity:1!important;transform:none!important}
+#netautoAiFab .netauto-ai-live{position:absolute!important;right:-8px!important;top:-8px!important;min-width:31px!important;height:25px!important;padding:0 6px!important;border-radius:99px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#a9fbff!important;color:#06131e!important;border:2px solid #07111d!important;font:900 9px/1 Arial,sans-serif!important;letter-spacing:.5px!important;box-shadow:0 6px 18px rgba(71,221,255,.4)!important}
+#netautoAiFab:hover{transform:translateY(-6px) scale(1.055)!important;box-shadow:0 28px 68px rgba(0,0,0,.55),0 0 0 7px rgba(92,225,230,.08),0 0 62px rgba(72,211,255,.4)!important}
+#netautoAiFab:focus-visible{outline:none!important;box-shadow:0 0 0 4px rgba(167,251,255,.24),0 28px 68px rgba(0,0,0,.55)!important}
+#netautoAiPanel{position:fixed!important;right:26px!important;bottom:116px!important;z-index:2147483646!important;width:min(510px,calc(100vw - 34px))!important;height:min(730px,calc(100vh - 138px))!important;display:none!important;flex-direction:column!important;background:linear-gradient(160deg,rgba(5,17,29,.985),rgba(12,19,45,.985))!important;border:1px solid rgba(121,227,255,.27)!important;border-radius:25px!important;box-shadow:0 34px 110px rgba(0,0,0,.64),0 0 65px rgba(63,198,255,.1)!important;backdrop-filter:blur(24px)!important;overflow:hidden!important}
+#netautoAiPanel.open{display:flex!important;animation:netautoFinalPanel .2s ease-out both!important}
+#netautoAiPanel .ai-float-head{background:linear-gradient(135deg,rgba(13,59,78,.98),rgba(38,28,78,.98))!important;padding:18px 20px!important;border-bottom:1px solid rgba(145,225,255,.15)!important}
+#netautoAiPanel .ai-float-head b{color:#effcff!important;font-size:16px!important}.ai-float-head small{color:#a9c7d7!important}
+#netautoAiPanel .ai-float-body{padding:13px!important}.netauto-ai-capabilities button{color:#c9e2ef!important}
+#netautoAiPanel .ai-chat-log{background:rgba(1,8,15,.62)!important;border-color:rgba(108,180,215,.16)!important;color:#d9ebf5!important}
+#netautoAiPanel #netautoAiInput{background:#06131f!important;color:#e7f6fd!important}
+@keyframes netautoFinalFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes netautoFinalPanel{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:560px){#netautoAiFab{right:15px!important;bottom:15px!important;width:66px!important;height:66px!important;border-radius:21px!important}#netautoAiPanel{right:10px!important;bottom:92px!important;width:calc(100vw - 20px)!important;height:calc(100vh - 108px)!important}.netauto-ai-label{display:none!important}}
+</style>
+</head><body>
+<header><div class="bar"><div class="brand">◉ NetAuto Pro <span>v1.5 · LOCAL · STANDALONE</span></div><div id="state" class="status ok">● Funcionando localmente</div></div></header>
+<main class="wrap">
+<div class="hero"><h1>Network Intelligence & Automation Platform</h1><p>Diseña, valida, documenta y exporta redes sin depender de un servidor para el análisis local.</p><div class="quick"><button onclick="show('proyecto')">🚀 Nuevo proyecto</button><button onclick="show('plan')">📐 IP Planning</button><button onclick="exportXLSX()">📊 Descargar Excel</button></div></div>
+<div class="notice"><b>Modo local:</b> esta versión abre directamente como documento HTML. Los proyectos, direccionamiento, VLAN, topología y análisis se guardan en este navegador. No requiere Live Server ni puerto 8000 para funcionar.</div>
+<div id="message"></div>
+<div class="cards"><div class="stat">Proyectos<b id="sProjects">0</b></div><div class="stat">Zonas<b id="sZones">0</b></div><div class="stat">Usuarios<b id="sUsers">0</b></div><div class="stat">Subredes<b id="sIP">0</b></div><div class="stat">VLAN<b id="sVLAN">0</b></div><div class="stat">Equipos<b id="sDev">0</b></div><div class="stat">Ancho de banda<b id="sBW">0 Mbps</b></div><div class="stat">Validación<b id="sVal">—</b></div></div>
+<nav class="tabs"><button class="tab active" data-view="inicio" onclick="show('inicio')">🏠 Inicio</button><button class="tab" data-view="proyecto" onclick="show('proyecto')">📋 Proyecto</button><button class="tab" data-view="inventario" onclick="show('inventario')">🖥️ Equipos y Automatización</button><button class="tab" data-view="red" onclick="show('red')">🌐 Análisis</button><button class="tab" data-view="plan" onclick="show('plan')">📐 IP Planning <span class="locked">BLOQUEADA</span></button><button class="tab" data-view="segmentacion" onclick="show('segmentacion')">🔀 VLAN / VPN</button><button class="tab" data-view="presupuesto" onclick="show('presupuesto')">💰 Presupuesto</button><button class="tab" data-view="topologia" onclick="show('topologia')">🕸️ Topología <span class="locked">BLOQUEADA</span></button><button class="tab" data-view="subnetting" onclick="show('subnetting');renderSubnetting()">🧮 Subnetting / VLSM</button><button class="tab" data-view="ciberdefensa" onclick="show('ciberdefensa');renderCyberDefense()">🛡️ Ciberdefensa IA</button></nav>
+<section id="inicio" class="view active"><div class="grid2"><section class="panel"><div class="panel-head"><h2>🚀 Flujo recomendado</h2></div><div class="chips"><span class="chip">1. Crear proyecto</span><span class="chip">2. Definir demanda</span><span class="chip">3. Generar VLSM</span><span class="chip">4. Validar</span><span class="chip">5. Exportar Excel</span><span class="chip">6. Configurar equipos</span></div></section><section class="panel"><div class="panel-head"><h2>🛡️ Principios</h2></div><div class="chips"><span class="chip">Datos dinámicos</span><span class="chip">Sin IPs fijas</span><span class="chip">VLSM verificable</span><span class="chip">Capacidades por equipo</span><span class="chip">Aprobación humana</span></div></section></div><section class="panel"><div class="panel-head"><h2>📌 Estado del proyecto</h2><button onclick="show('proyecto')">Abrir proyecto</button></div><div id="homeProject" class="empty">Aún no hay proyecto. Crea uno para comenzar.</div></section></section>
+<section id="proyecto" class="view"><section class="panel"><div class="panel-head"><h2>📋 Constructor de proyecto</h2><span class="kpi">Los valores son del proyecto actual, no del Excel de referencia.</span></div><div class="row" style="margin-bottom:12px"><select id="projectSelect" class="wide"><option value="">Selecciona un proyecto</option></select><button class="secondary" onclick="loadSelectedProject()">Cargar</button><button class="danger" onclick="deleteCurrentProject()">Eliminar proyecto actual</button></div><div class="grid2"><div><label>Nombre del proyecto</label><input id="pName" class="wide" placeholder="Ej. Red corporativa 2026"></div><div><label>Tipo de entorno</label><select id="pEnv" class="wide"><option>Empresa</option><option>Campus</option><option>Datacenter</option><option>Sucursal</option><option>Industrial</option><option>Hotel</option><option>Educativo</option><option>Personalizado</option></select></div></div><div class="grid3" style="margin-top:12px"><div><label>Edificios</label><input id="pBuildings" type="number" min="1" value="1"></div><div><label>Pisos / zonas por edificio</label><input id="pZones" type="number" min="1" value="4"></div><div><label>Usuarios totales</label><input id="pUsers" type="number" min="1" value="100"></div><div><label>Crecimiento (%)</label><input id="pGrowth" type="number" min="0" value="20"></div><div><label>Red IPv4 base</label><input id="pCidr" value="10.10.0.0/16"></div><div><label>IPv6 base</label><input id="pV6" value="2001:db8:100::/48"></div></div><div class="grid3" style="margin-top:12px"><div><label>VoIP</label><input id="pVoip" type="number" min="0" value="0"></div><div><label>CCTV</label><input id="pCctv" type="number" min="0" value="0"></div><div><label>AP Wi-Fi</label><input id="pAp" type="number" min="0" value="0"></div><div><label>IoT</label><input id="pIot" type="number" min="0" value="0"></div><div><label>Servidores</label><input id="pServers" type="number" min="0" value="0"></div><div><label>Internet (Mbps)</label><input id="pInternet" type="number" min="0" value="1000"></div></div><div class="topo-config">
+<h3>🕸️ Requerimientos de topología</h3>
+<div class="topo-note">Estos campos controlan exclusivamente la topología propuesta. El IP Planning queda intacto y no se recalcula por cambiar estas opciones.</div>
+<div class="grid3" style="margin-top:10px">
+<div><label>Internet / ISP</label><select id="tInternet" class="wide"><option value="si">Sí</option><option value="no">No</option></select></div>
+<div><label>Equipos de borde / firewall</label><select id="tFirewall" class="wide"><option value="0">0</option><option value="1" selected>1</option><option value="2">2 (redundante)</option></select></div>
+<div><label>Core / routing</label><select id="tCore" class="wide"><option value="1">1</option><option value="2" selected>2 (redundante)</option></select></div>
+<div><label>Distribución por edificio</label><select id="tDistribution" class="wide"><option value="0">No usar</option><option value="1">1 equipo</option><option value="2">2 equipos (redundante)</option></select></div>
+<div><label>Switches de acceso por piso</label><input id="tAccess" type="number" min="1" max="8" value="1" class="wide"></div>
+<div><label>Redundancia de enlaces</label><select id="tRedundancy" class="wide"><option value="si" selected>Sí</option><option value="no">No</option></select></div>
+<div><label>Wi-Fi en topología</label><select id="tWifi" class="wide"><option value="auto" selected>Automático según AP</option><option value="si">Mostrar</option><option value="no">Ocultar</option></select></div>
+<div><label>Servidores</label><select id="tServers" class="wide"><option value="auto" selected>Automático según cantidad</option><option value="si">Mostrar</option><option value="no">Ocultar</option></select></div>
+<div><label>Servicios / endpoints</label><select id="tEndpoints" class="wide"><option value="auto" selected>Automático</option><option value="si">Mostrar</option><option value="no">Ocultar</option></select></div>
+</div></div>
+<div class="row" style="margin-top:14px"><button onclick="saveProject()">💾 Crear / guardar proyecto</button><button class="secondary" onclick="analyzeProject()">🧠 Analizar y generar diseño</button><button class="secondary" onclick="validateProject()">✓ Validar</button><button onclick="exportXLSX()">📊 Exportar Excel</button></div><pre id="projectOut">Crea o carga un proyecto para comenzar.</pre></section><section class="panel"><div class="panel-head"><h2>📈 Resultado del análisis</h2></div><div id="analysisOut" class="empty">El análisis aparecerá aquí.</div></section></section>
+<section id="inventario" class="view">
+<section class="panel">
+<div class="panel-head"><div><h2>🖥️ Centro de Equipos y Automatización</h2><div class="section-help">Un solo lugar para inventariar, seleccionar, validar y generar la configuración del equipo. IP Planning y Topología permanecen bloqueados y solo aportan contexto.</div></div><span class="locked">IP Planning + Topología BLOQUEADOS</span></div>
+<div class="row"><input id="dHost" placeholder="Hostname"><input id="dIp" placeholder="IP de gestión"><select id="dVendor"><option>Cisco</option><option>Huawei</option><option>Aruba</option><option>Juniper</option><option>MikroTik</option><option>Fortinet</option></select><input id="dModel" placeholder="Modelo / versión"><select id="dRole"><option>Access</option><option>Distribution</option><option>Core</option><option>Router</option><option>Firewall</option><option>AP</option></select><button onclick="addDevice()">+ Agregar equipo</button></div>
+<div id="deviceTable" style="margin-top:12px"></div>
+</section>
+<section class="panel">
+<div class="panel-head"><div><h2>⚙️ Constructor de configuración por equipo</h2><div class="section-help">Selecciona un equipo del inventario o completa los datos. NetAuto genera comandos reales para la familia de plataforma elegida y un bloque de verificación. Antes de aplicar, confirma modelo, versión de firmware, interfaces y direccionamiento.</div></div></div>
+<div class="config-grid">
+<div><label>Equipo del inventario</label><select id="cfgDevice" onchange="loadSelectedDevice()"><option value="">— Seleccionar —</option></select></div>
+<div><label>Fabricante</label><select id="cfgVendor"><option>Cisco IOS-XE</option><option>Huawei VRP</option><option>FortiGate FortiOS 7.x</option><option>MikroTik RouterOS v7</option></select></div>
+<div><label>Rol</label><select id="cfgRole"><option>Switch de acceso</option><option>Switch Core / L3</option><option>Router / OSPF</option><option>Firewall / borde</option></select></div>
+<div><label>Hostname</label><input id="cfgHost" value="NETAUTO-01"></div>
+<div><label>Interfaz uplink</label><input id="cfgUplink" value="GigabitEthernet1/0/1"></div>
+<div><label>Puertos de acceso</label><input id="cfgAccess" value="GigabitEthernet1/0/2-24"></div>
+<div><label>Usuario admin</label><input id="cfgUser" value="netadmin"></div>
+<div><label>Contraseña temporal</label><input id="cfgPass" value="CAMBIAR_PASSWORD" type="text"></div>
+<div><label>Router-ID</label><input id="cfgRid" value="1.1.1.1"></div>
+<div><label>VLAN / ID</label><input id="cfgVlan" value="10"></div>
+<div><label>Nombre VLAN</label><input id="cfgVlanName" value="USUARIOS"></div>
+<div><label>Gateway / IP SVI</label><input id="cfgGw" value="10.10.10.1"></div>
+<div><label>Red / prefijo</label><input id="cfgNet" value="10.10.10.0/24"></div>
+<div><label>Red de administración permitida</label><input id="cfgMgmtNet" value="10.10.10.0/24" placeholder="Ej. 10.10.99.0/24"></div>
+<div><label>Área OSPF</label><input id="cfgArea" value="0.0.0.0"></div>
+<div><label>DNS</label><input id="cfgDns" value="1.1.1.1"></div>
+<div><label>WAN FortiGate</label><input id="cfgWan" value="DHCP"></div>
+</div>
+<div class="row" style="margin-top:12px"><button onclick="renderConfigContext()">📌 Cargar proyecto</button><button onclick="generateVendorConfig()">⚙️ Generar configuración</button><button onclick="generateHardening()">🛡️ Generar hardening</button><button onclick="preflightConfig()">✓ Validar antes de aplicar</button><button class="secondary" onclick="copyVendorConfig()">📋 Copiar</button><button class="secondary" onclick="downloadVendorConfig()">⬇️ Descargar</button><button class="secondary" onclick="downloadVendorConfigPackage()">🗂 4 fabricantes</button></div>
+<div id="configWarnings" style="margin-top:10px"></div><div id="configContext" class="notice" style="margin-top:10px">Selecciona un equipo o un proyecto.</div><div id="configPreflight" style="margin-top:10px"></div><pre id="vendorConfigOut" class="config-box">Aquí aparecerá la configuración.</pre>
+</section>
+<section class="panel"><div class="panel-head"><h2>🔎 Verificación posterior</h2><span class="kpi">La verificación se genera junto con la configuración.</span></div><div id="verificationBox" class="grid2"></div></section>
+</section>
+<section id="ia" class="view"><section class="panel"><div class="panel-head"><h2>🧠 Agente IA / Diagnóstico</h2><span class="kpi">Motor local basado en reglas + contexto del proyecto.</span></div><textarea id="aiSnap" rows="10" placeholder="Pega una salida de equipo, log, ping, traceroute, OSPF, BGP, STP, DHCP o DNS..."></textarea><div class="row" style="margin-top:8px"><button onclick="runAI()">🧠 Analizar</button><button class="secondary" onclick="document.getElementById('aiSnap').value='';document.getElementById('aiOut').innerHTML='<div class=empty>Esperando datos.</div>'">Limpiar</button></div><div id="aiOut" style="margin-top:12px"><div class="empty">Escribe o pega un diagnóstico.</div></div></section></section>
+<section id="red" class="view"><section class="panel"><div class="panel-head"><h2>🌐 Análisis de entorno</h2></div><div class="grid3"><div class="stat"><span class="kpi">Dirección IPv4</span><b id="ipClass">—</b></div><div class="stat"><span class="kpi">Capacidad</span><b id="capInfo">—</b></div><div class="stat"><span class="kpi">Ancho de banda</span><b id="bwInfo">—</b></div></div><div id="networkAnalysis" style="margin-top:12px" class="empty">Guarda y analiza un proyecto.</div></section></section>
+<section id="plan" class="view"><section class="panel"><div class="panel-head"><h2>📐 IP Planning · VLSM IPv4 / IPv6</h2><div class="row"><button onclick="generateIPPlan()">⚙ Generar / actualizar</button><button onclick="exportXLSX()">📊 Descargar Excel</button></div></div><div class="section-help"><b>Importante:</b> en este proyecto, <b>Zona = Piso</b>. Cada zona/piso recibe su propia subred. La lógica sigue el enfoque de tu Excel: demanda → subred → máscara → gateway → rango de usuarios → broadcast → capacidad restante, pero todos los datos se calculan desde el proyecto actual.</div><div id="ipTable" class="empty">Aún no hay IP Planning.</div></section></section>
+<section id="segmentacion" class="view"><div class="grid2"><section class="panel"><div class="panel-head"><h2>🔀 VLAN</h2><button onclick="addVlan()">+ Agregar VLAN</button></div><div class="row"><input id="vId" type="number" min="1" max="4094" value="20"><input id="vName" value="USUARIOS"><input id="vNet" placeholder="10.20.20.0/24"><input id="vGw" placeholder="10.20.20.1"></div><div id="vlanTable" style="margin-top:12px"></div></section><section class="panel"><div class="panel-head"><h2>🔐 VPN</h2><button onclick="addVpn()">+ Agregar VPN</button></div><div class="row"><input id="vpnName" value="VPN-01"><select id="vpnKind"><option>IPsec</option><option>SSL VPN</option><option>WireGuard</option><option>Site-to-Site</option></select><input id="vpnLocal" placeholder="Red local"><input id="vpnRemote" placeholder="Red remota"></div><div id="vpnTable" style="margin-top:12px"></div></section></div></section>
+
+<section id="subnetting" class="view">
+<section class="panel">
+<div class="panel-head"><div><h2>🧮 Subnetting / VLSM — verificación</h2><div class="section-help">Este módulo NO cambia IP Planning. Lee la tabla congelada y comprueba máscara, alineación de red, gateway, primer/último host, broadcast, capacidad, IP libres y solapamientos.</div></div><button onclick="renderSubnetting()">↻ Rectificar subnetting</button></div>
+<div id="subnetSummary" class="subnet-grid"></div><div id="subnetTable" class="empty">Genera primero IP Planning en el proyecto. Este módulo solo verifica sus resultados.</div>
+</section>
+<section class="panel"><div class="panel-head"><h2>📌 Criterio de validación</h2></div><div class="grid3"><div class="def-card"><b>VLSM</b><p>Cada piso/zona conserva la subred calculada por IP Planning; no se reasignan redes.</p></div><div class="def-card"><b>Capacidad</b><p>Se comprueba que la capacidad utilizable cubra gateway + usuarios solicitados y el margen calculado.</p></div><div class="def-card"><b>No solapamiento</b><p>Las redes deben ser disjuntas entre sí y estar correctamente alineadas con su prefijo.</p></div></div></section>
+</section>
+<section id="ciberdefensa" class="view">
+<section class="panel"><div class="panel-head"><div><h2>🛡️ Ciberdefensa contra amenazas impulsadas por IA</h2><div class="section-help">Defensa preventiva: protege la red y el agente IA frente a phishing generado por IA, automatización maliciosa, robo de credenciales, prompt injection, exfiltración de información y cambios de configuración no autorizados.</div></div><button onclick="renderCyberDefense()">↻ Evaluar controles</button></div>
+<div id="cyberSummary" class="subnet-grid"></div><div id="cyberControls" class="def-grid"></div></section>
+<section class="panel"><div class="panel-head"><h2>🧠 Guardia del Agente IA</h2></div><div class="section-help">El texto externo se trata como dato no confiable. El analizador solo marca patrones de riesgo; nunca ejecuta comandos ni cambia equipos.</div><textarea id="cyberInput" rows="9" placeholder="Pega aquí un prompt, correo, log o salida de equipo sospechosa..."></textarea><div class="row" style="margin-top:8px"><button onclick="scanCyberText()">🔍 Analizar contenido</button><button class="secondary" onclick="document.getElementById('cyberInput').value='';document.getElementById('cyberOut').innerHTML='<div class=empty>Esperando contenido.</div>'">Limpiar</button></div><div id="cyberOut" style="margin-top:10px"><div class="empty">Esperando contenido.</div></div></section>
+<section class="panel"><div class="panel-head"><h2>🔐 Controles técnicos recomendados</h2></div><div class="grid3"><div class="def-card"><b>Identidad</b><p>MFA/RBAC, cuentas nominales, mínimo privilegio, SSHv2 y eliminación de Telnet.</p></div><div class="def-card"><b>Red</b><p>Segmentación, ACL/firewall, administración separada, SNMPv3, DHCP snooping donde aplique y egress filtering.</p></div><div class="def-card"><b>Agente IA</b><p>Allowlist de herramientas, secretos fuera del contexto, aprobación humana para cambios y registro de cada acción.</p></div></div><section class="panel"><div class="panel-head"><h2>⚔️ Respuesta aplicable al proyecto</h2><span class="kpi">Genera controles defensivos sin ejecutar cambios.</span></div><div class="row"><select id="cyberDevice"><option value="">— Seleccionar equipo —</option></select><button onclick="generateCyberHardening()">🛡️ Generar defensa del equipo</button><button onclick="auditCyberProject()">🔍 Auditar proyecto</button></div><div id="cyberActionOut" style="margin-top:10px"><div class="empty">Selecciona un equipo para generar su bloque defensivo.</div></div></section>
+</section>
+</section>
+<section id="presupuesto" class="view"><section class="panel"><div class="panel-head"><h2>💰 Presupuesto</h2></div><div class="row"><input id="cName" class="wide" placeholder="Equipo / servicio"><input id="cCat" value="network"><input id="cQty" type="number" value="1" min="1"><input id="cUnit" type="number" value="0" min="0"><button onclick="addCost()">+ Agregar</button></div><div id="costTable" style="margin-top:12px"></div></section></section>
+<section id="topologia" class="view">
+<section class="panel">
+  <div class="panel-head"><div><h2>🕸️ Diseñador de topología dinámica</h2><div class="section-help">La topología se construye exclusivamente con los requerimientos del proyecto actual. Si cambia la cantidad de edificios, pisos, equipos de borde, Core, distribución, acceso, redundancia o servicios, el diagrama se adapta. El IP Planning no se modifica.</div></div><div class="row topo-controls"><button onclick="buildTopology()">↻ Generar / actualizar</button><button class="secondary" onclick="exportTopologyPDF()">📄 PDF completo y detallado</button><button class="secondary" onclick="exportTopologySVG()">🖼 SVG vectorial (zoom)</button><button class="secondary" onclick="exportTopologySVGPackage()">🗂 SVG por edificio</button><button class="secondary" onclick="printTopology()">🖨 Vista de impresión</button></div></div>
+  <div id="topologySummary" class="topo-summary"></div>
+  <div class="topo-tabs"><button id="topoTabPhysical" class="topo-tab active" onclick="setTopologyView('physical')">🏢 Física / jerárquica</button><button id="topoTabLogical" class="topo-tab" onclick="setTopologyView('logical')">🔀 Lógica</button><button id="topoTabCompact" class="topo-tab" onclick="setTopologyView('compact')">📋 Resumen</button></div>
+  <div class="topo-legend"><span><i class="legend-dot internet"></i> Internet / ISP</span><span><i class="legend-dot security"></i> Seguridad / borde</span><span><i class="legend-dot core"></i> Core</span><span><i class="legend-dot building"></i> Edificio</span><span><i class="legend-dot floor"></i> Piso / zona</span><span><i class="legend-line"></i> Enlace</span></div><div class="section-help">El PDF ahora se divide en un resumen general y una página de detalle por edificio para conservar legibilidad. El SVG completo y los SVG por edificio son vectoriales y permiten zoom sin pérdida de calidad.</div>
+  <div id="topologyGraph" class="topology-canvas"><div class="empty">Crea un proyecto y pulsa “Generar topología”.</div></div>
+</section>
+<section class="panel"><div class="panel-head"><h2>📖 Cómo leerla</h2></div><div id="topologyHelp" class="grid3"><div class="topo-help-card"><b>1. Borde</b><p>Representa la entrada/salida WAN y los equipos de seguridad solicitados.</p></div><div class="topo-help-card"><b>2. Núcleo y distribución</b><p>Representan routing y concentración. Solo aparecen las capas que el proyecto solicita.</p></div><div class="topo-help-card"><b>3. Acceso y servicios</b><p>Cada edificio y piso se acomoda dinámicamente. Los servicios se muestran como grupos para mantener el diagrama legible.</p></div></div></section>
+</section>
+</main><div id="toast" class="toast"></div>
+<!-- ===== NETAUTO AI · REAL FLOATING COMMAND CENTER ===== -->
+<button id="netautoAiFab" class="netauto-ai-fab" title="Abrir NetAuto AI Command Center" aria-label="Abrir Agente IA" onclick="toggleNetAutoAgent()">
+  <span class="netauto-ai-orb" aria-hidden="true">✦</span>
+  <span class="netauto-ai-label">NetAuto AI</span>
+  <span class="netauto-ai-live">LIVE</span>
+</button>
+<aside id="netautoAiPanel" aria-label="Agente IA NetAuto Pro">
+  <div class="ai-float-head">
+    <div><b>✦ NetAuto AI Command Center</b><small>Inteligencia de red · solo lectura · revisión humana</small></div>
+    <button type="button" aria-label="Cerrar Agente IA" onclick="toggleNetAutoAgent()">✕</button>
+  </div>
+  <div class="ai-float-body">
+    <div class="ai-mode">
+      <button id="agentModeChat" class="active" onclick="setAgentMode('chat')">💬 Copiloto</button>
+      <button id="agentModeAudit" onclick="setAgentMode('audit')">🔍 Auditor</button>
+      <button id="agentModeGuard" onclick="setAgentMode('guard')">🛡️ Guardia IA</button>
+      <span class="agent-pill safe">● Seguro · no ejecuta cambios</span>
+    </div>
+    <div class="netauto-ai-capabilities">
+      <button onclick="agentQuick('Diagnostica el estado general del proyecto y dime los principales riesgos.')">🧭 Estado</button>
+      <button onclick="agentQuick('Audita equipos, modelos, IP de gestión y configuración.')">🖥 Equipos</button>
+      <button onclick="agentQuick('Revisa VLAN, subredes y consistencia VLSM sin modificar IP Planning.')">📐 IP / VLSM</button>
+      <button onclick="agentQuick('Haz una auditoría de ciberseguridad y hardening por fabricante.')">🛡 Seguridad</button>
+    </div>
+    <div id="netautoAiStatus" class="notice">El agente usa el contexto local del proyecto. IP Planning y Topología se consultan en solo lectura.</div>
+    <div id="netautoAiChat" class="ai-chat-log"><div class="ai-msg bot"><b>NetAuto AI:</b> Listo. Puedo analizar equipos, direccionamiento, VLAN, topología, OSPF, configuración y ciberseguridad.</div></div>
+    <div id="netautoAiAudit" style="display:none"></div>
+    <div id="netautoAiGuard" style="display:none"></div>
+  </div>
+  <div class="ai-float-foot">
+    <textarea id="netautoAiInput" placeholder="Pregunta, pega una salida de equipo o describe un problema..."></textarea>
+    <div class="ai-actions"><button onclick="agentRun()">Analizar</button><button class="secondary" onclick="agentInsertContext()">Usar contexto</button><button class="secondary" onclick="agentClear()">Limpiar</button></div>
+  </div>
+</aside>
+<script>
+const KEY='netauto_pro_v1_standalone';
+let state=loadState();
+const $=id=>document.getElementById(id);
+function uid(){return (globalThis.crypto&&crypto.randomUUID)?crypto.randomUUID():('na-'+Date.now()+'-'+Math.random().toString(16).slice(2))}
+function defaultState(){return {projects:[],current:null,devices:[],vlans:[],vpns:[],costs:[],ipPlan:[],analysis:null,topology:[]}}
+function loadState(){try{return JSON.parse(localStorage.getItem(KEY))||defaultState()}catch{return defaultState()}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(state));renderAll()}
+function toast(s){const x=$('toast');x.textContent=s;x.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>x.style.display='none',2600)}
+function message(txt,type='notice'){ $('message').innerHTML='<div class="'+type+'">'+esc(txt)+'</div>';setTimeout(()=>{$('message').innerHTML=''},4000)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===id));$(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function currentProject(){const p=state.projects.find(p=>p.id===state.current)||null;if(p&&!p.topology)p.topology={internet:true,firewalls:1,cores:2,distribution:0,accessPerFloor:1,redundancy:true,wifi:'auto',servers:'auto',endpoints:'auto'};return p}
+function readProject(){return {name:$('pName').value.trim()||'Proyecto sin nombre',env:$('pEnv').value,buildings:+$('pBuildings').value||1,zones:+$('pZones').value||1,users:+$('pUsers').value||1,growth:+$('pGrowth').value||0,cidr:$('pCidr').value.trim(),ipv6:$('pV6').value.trim(),voip:+$('pVoip').value||0,cctv:+$('pCctv').value||0,ap:+$('pAp').value||0,iot:+$('pIot').value||0,servers:+$('pServers').value||0,internet:+$('pInternet').value||0,topology:{internet:$('tInternet').value==='si',firewalls:+$('tFirewall').value,cores:+$('tCore').value,distribution:+$('tDistribution').value,accessPerFloor:Math.max(1,Math.min(8,+$('tAccess').value||1)),redundancy:$('tRedundancy').value==='si',wifi:$('tWifi').value,servers:$('tServers').value,endpoints:$('tEndpoints').value}}}
+function fillProject(p){if(!p)return;$('pName').value=p.name;$('pEnv').value=p.env;$('pBuildings').value=p.buildings;$('pZones').value=p.zones;$('pUsers').value=p.users;$('pGrowth').value=p.growth;$('pCidr').value=p.cidr;$('pV6').value=p.ipv6;$('pVoip').value=p.voip;$('pCctv').value=p.cctv;$('pAp').value=p.ap;$('pIot').value=p.iot;$('pServers').value=p.servers;$('pInternet').value=p.internet;const t=p.topology||{};$('tInternet').value=t.internet===false?'no':'si';$('tFirewall').value=String(Number.isFinite(t.firewalls)?t.firewalls:1);$('tCore').value=String(Number.isFinite(t.cores)?t.cores:2);$('tDistribution').value=String(Number.isFinite(t.distribution)?t.distribution:0);$('tAccess').value=String(Number.isFinite(t.accessPerFloor)?t.accessPerFloor:1);$('tRedundancy').value=t.redundancy===false?'no':'si';$('tWifi').value=t.wifi||'auto';$('tServers').value=t.servers||'auto';$('tEndpoints').value=t.endpoints||'auto'}
+function saveProject(){try{const p=readProject();validateInput(p);const old=currentProject();if(old){Object.assign(old,p);message('Proyecto actualizado correctamente.')}else{p.id=uid();p.created=new Date().toISOString();state.projects.push(p);state.current=p.id;message('Proyecto creado correctamente.')}persist();fillProject(currentProject());analyzeProject(false);state.topology=makeTopology(currentProject());persist()}catch(e){message(e.message,'error')}}
+function validateInput(p){if(p.users<1)throw Error('Los usuarios deben ser mayores que 0.');if(p.buildings<1||p.zones<1)throw Error('Edificios y zonas deben ser mayores que 0.');if(!/^[0-9a-fA-F:.]+\/\d{1,3}$/.test(p.cidr))throw Error('La red IPv4 base debe tener formato CIDR, por ejemplo 10.10.0.0/16.');if(!parseCIDR4(p.cidr))throw Error('La red IPv4 base no es válida o no tiene capacidad suficiente.')}
+function parseCIDR4(c){try{let [ip,pre]=c.split('/');pre=+pre;if(pre<0||pre>30)return null;let a=ip.split('.').map(Number);if(a.length!==4||a.some(x=>x<0||x>255))return null;let n=((a[0]<<24)>>>0)|((a[1]<<16)>>>0)|((a[2]<<8)>>>0)|a[3];let mask=pre===0?0:(0xffffffff<<(32-pre))>>>0;return {pre,network:(n&mask)>>>0,size:2**(32-pre)}}catch{return null}}
+function ipNumToStr(n){return [(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.')}
+function prefixForHosts(hosts){const needed=hosts+3;const bits=Math.ceil(Math.log2(Math.max(4,needed)));const pre=32-bits;if(pre<2)throw Error('La demanda requiere una subred IPv4 mayor que /30.');return pre}
+function ipv6Subnets(base,count){try{const [addr,prefixS]=base.split('/');const prefix=+prefixS;if(prefix<0||prefix>64||prefix>48)return [];let groups=addr.split('::');let left=groups[0]?groups[0].split(':').filter(Boolean):[];let right=groups[1]?groups[1].split(':').filter(Boolean):[];while(left.length+right.length<8)left.push('0');let full=[...left,...right];while(full.length<8)full.push('0');let baseBig=0n;for(const g of full)baseBig=(baseBig<<16n)+BigInt(parseInt(g||'0',16));const base64=(baseBig>>64n)<<64n;const out=[];for(let i=0;i<count;i++){let n=base64+(BigInt(i)<<64n);let parts=[];for(let j=7;j>=0;j--)parts.push(((n>>BigInt(j*16))&65535n).toString(16));out.push(parts.join(':').replace(/(^|:)0+(?=[0-9a-f])/g,'$1')+'/64')}return out}catch{return []}}
+function generateIPPlan(){
+ try{
+  const p=currentProject();
+  if(!p) throw Error('Primero crea/guarda un proyecto.');
+  validateInput(p);
+  const base=parseCIDR4(p.cidr);
+  const zoneCount=p.buildings*p.zones;
+  const designUsers=Math.ceil(p.users*(1+p.growth/100));
+  const baseUsers=Math.floor(designUsers/zoneCount);
+  const remainder=designUsers%zoneCount;
+  const demands=[];
+  for(let i=0;i<zoneCount;i++){
+   const users=baseUsers+(i<remainder?1:0);
+   demands.push({building:Math.floor(i/p.zones)+1,zone:(i%p.zones)+1,users,purpose:'Usuarios'});
+  }
+  const extras=[['VoIP',p.voip],['CCTV',p.cctv],['Wi-Fi AP',p.ap],['IoT',p.iot],['Servidores',p.servers]];
+  extras.forEach(([purpose,n])=>{if(n>0) demands.push({building:'—',zone:'—',users:n,purpose})});
+  demands.sort((a,b)=>b.users-a.users || String(a.purpose).localeCompare(String(b.purpose)));
+  let cursor=base.network;
+  const rows=[];
+  const v6List=ipv6Subnets(p.ipv6,demands.length);
+  for(const d of demands){
+   const pre=prefixForHosts(d.users);
+   const size=2**(32-pre);
+   const aligned=Math.ceil(cursor/size)*size;
+   const broadcast=aligned+size-1;
+   if(broadcast>=base.network+base.size) throw Error('La red base '+p.cidr+' no tiene capacidad para todas las demandas. Amplíala o reduce usuarios/crecimiento.');
+   const gateway=aligned+1;
+   const usable=size-2;
+   const userCapacity=usable-1;
+   if(d.users>userCapacity) throw Error('La subred calculada para '+d.purpose+' no tiene suficientes direcciones para la demanda incluyendo el gateway.');
+   rows.push({id:rows.length+1,building:d.building,zone:d.zone,purpose:d.purpose,users:d.users,cidr:ipNumToStr(aligned)+'/'+pre,gateway:ipNumToStr(gateway),first:ipNumToStr(aligned+2),last:ipNumToStr(broadcast-1),broadcast:ipNumToStr(broadcast),usable,free:userCapacity-d.users,ipv6:v6List[rows.length]||''});
+   cursor=broadcast+1;
+  }
+  rows.sort((a,b)=>{const aExtra=a.building==='—',bExtra=b.building==='—';if(aExtra!==bExtra)return aExtra?1:-1;if(!aExtra&&a.building!==b.building)return a.building-b.building;if(!aExtra&&a.zone!==b.zone)return a.zone-b.zone;return a.id-b.id});
+  rows.forEach((r,i)=>r.id=i+1);
+  state.ipPlan=rows;
+  state.analysis=calculateAnalysis(p,rows);
+  state.topology=makeTopology(p);
+  persist();
+  show('plan');
+  toast('IP Planning generado correctamente');
+ }catch(e){message(e.message,'error')}
+}
+function calculateAnalysis(p,rows){const designUsers=Math.ceil(p.users*(1+p.growth/100));const concurrent=Math.max(1,Math.ceil(designUsers*.35));const userBW=concurrent*2;const voipBW=p.voip*.1;const cctvBW=p.cctv*2;const apBW=p.ap*8;const iotBW=p.iot*.2;const serverBW=p.servers*5;const raw=userBW+voipBW+cctvBW+apBW+iotBW+serverBW;const recommended=Math.ceil(raw*1.3);const v=Math.max(1,rows.length);return {designUsers,concurrent,userBW,voipBW,cctvBW,apBW,iotBW,serverBW,raw,recommended,vlanCount:v,subnetCount:rows.length}}
+function analyzeProject(auto=true){try{const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}generateIPPlan();if(!auto)return}catch(e){message(e.message,'error')}}
+function validateProject(){const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}const a=state.analysis;if(!a){generateIPPlan();return}let issues=[];if(a.recommended>p.internet*0.9)issues.push('El ancho de banda calculado se acerca o supera la capacidad de Internet configurada.');if(state.ipPlan.some(r=>r.free<0))issues.push('Hay subredes sin capacidad libre.');const base=parseCIDR4(p.cidr);if(!base)issues.push('CIDR inválido.');const ok=issues.length===0; $('sVal').textContent=ok?'OK':'RIESGO';$('sVal').className=ok?'ok':'bad';renderAnalysis();message(ok?'Validación completada sin conflictos básicos.':issues.join(' '),ok?'notice':'warning')}
+function renderAnalysis(){const p=currentProject(),a=state.analysis;if(!p||!a){$('analysisOut').innerHTML='<div class="empty">El análisis aparecerá aquí.</div>';return}const risks=[];if(a.recommended>p.internet*0.9)risks.push('Capacidad WAN/Internet ajustada');if(a.designUsers>4094)risks.push('Demanda alta: revisar segmentación');if(state.ipPlan.some(r=>r.free<5))risks.push('Algunas subredes tienen poco margen');const val=risks.length?'REVISAR':'OK';$('analysisOut').innerHTML=`<div class="grid3"><div class="stat"><span class="kpi">Usuarios de diseño</span><b>${a.designUsers.toLocaleString('es-CO')}</b></div><div class="stat"><span class="kpi">Subredes</span><b>${a.subnetCount}</b></div><div class="stat"><span class="kpi">Ancho recomendado</span><b>${a.recommended.toLocaleString('es-CO')} Mbps</b></div></div><div class="notice ${risks.length?'warning':''}"><b>Resultado:</b> ${val}. ${risks.length?risks.join(' · '):'No se detectaron conflictos básicos en el diseño.'}</div><table><tr><th>Componente</th><th>Estimación Mbps</th></tr><tr><td>Usuarios concurrentes</td><td>${a.userBW.toFixed(1)}</td></tr><tr><td>VoIP</td><td>${a.voipBW.toFixed(1)}</td></tr><tr><td>CCTV</td><td>${a.cctvBW.toFixed(1)}</td></tr><tr><td>Wi-Fi/AP</td><td>${a.apBW.toFixed(1)}</td></tr><tr><td>IoT</td><td>${a.iotBW.toFixed(1)}</td></tr><tr><td>Servidores</td><td>${a.serverBW.toFixed(1)}</td></tr></table>`;$('ipClass').textContent=p.cidr;$('capInfo').textContent=a.designUsers.toLocaleString('es-CO')+' usuarios';$('bwInfo').textContent=a.recommended.toLocaleString('es-CO')+' Mbps'}
+function renderIP(){const rows=state.ipPlan;if(!rows.length){$('ipTable').innerHTML='<div class="empty">Aún no hay IP Planning. Genera el diseño desde Proyecto.</div>';return}$('ipTable').innerHTML='<div style="overflow:auto"><table><thead><tr><th>#</th><th>Edificio</th><th>Piso / zona</th><th>Propósito</th><th>Usuarios</th><th>Red</th><th>Gateway</th><th>Primer host de usuarios</th><th>Último host</th><th>Broadcast</th><th>IPv6 /64</th><th>Hosts utilizables</th><th>IP libres</th></tr></thead><tbody>'+rows.map(r=>`<tr><td>${r.id}</td><td>${r.building}</td><td>${r.zone}</td><td>${esc(r.purpose)}</td><td>${r.users}</td><td class=mono>${r.cidr}</td><td class=mono>${r.gateway}</td><td class=mono>${r.first}</td><td class=mono>${r.last}</td><td class=mono>${r.broadcast}</td><td class=mono>${r.ipv6||"—"}</td><td>${r.usable}</td><td>${r.free}</td></tr>`).join('')+'</tbody></table></div>'}
+function addDevice(){const host=$('dHost').value.trim(),ip=$('dIp').value.trim(),vendor=$('dVendor').value,model=$('dModel').value.trim(),role=$('dRole').value;if(!host||!ip){message('Hostname e IP de gestión son obligatorios.','error');return}state.devices.push({id:uid(),host,ip,vendor,model:model||'No especificado',role});persist();$('dHost').value='';$('dIp').value='';$('dModel').value='';toast('Equipo agregado')}
+function renderDevices(){if(!state.devices.length){$('deviceTable').innerHTML='<div class="empty">No hay equipos registrados.</div>';return}$('deviceTable').innerHTML='<div style="overflow:auto"><table><tr><th>Hostname</th><th>IP</th><th>Fabricante</th><th>Modelo</th><th>Rol</th><th>Capacidades</th><th></th></tr>'+state.devices.map(d=>{const caps=capabilities(d.vendor,d.model);return `<tr><td>${esc(d.host)}</td><td class=mono>${esc(d.ip)}</td><td>${esc(d.vendor)}</td><td>${esc(d.model)}</td><td>${esc(d.role)}</td><td>${caps.join(', ')}</td><td><button class="danger" onclick="removeDevice('${d.id}')">Eliminar</button></td></tr>`}).join('')+'</table></div>'}
+function removeDevice(id){state.devices=state.devices.filter(x=>x.id!==id);persist();toast('Equipo eliminado')}
+function capabilities(v,m){const map={Cisco:['VLAN','STP/RSTP','LACP','OSPF','IPv6','SSH'],Huawei:['VLAN','STP/RSTP','LACP','OSPF','IPv6','SSH'],Aruba:['VLAN','STP/RSTP','LACP','OSPF','IPv6','SSH'],Juniper:['VLAN','STP/RSTP','LACP','OSPF','BGP','IPv6','SSH'],MikroTik:['VLAN','RSTP','LACP','OSPF','BGP','IPv6','SSH'],Fortinet:['VLAN','Routing','IPsec','ACL','IPv6','SSH']};return map[v]||[]}
+function generateConfig(){const vendor=$('intentVendor').value,intent=$('intent').value,val=$('intentValue').value.trim();if(!val){message('Escribe el objetivo de configuración.','error');return}let c='';if(intent==='Crear VLAN')c=`! ${vendor}\nconfigure terminal\nvlan <ID>\n name <NOMBRE>\nexit\n! Validar antes de aplicar`;else if(intent==='Configurar IP de interfaz')c=`! ${vendor}\ninterface <INTERFAZ>\nip address <IP> <MASCARA>\nno shutdown\n! Validar gateway y máscara`;else if(intent==='Activar SSH')c=`! ${vendor}\n! Crear usuario/AAA según política\nip ssh version 2\n! Validar soporte de modelo y versión`;else if(intent==='Crear OSPF')c=`! ${vendor}\nrouter ospf <ID>\n router-id <ROUTER-ID>\n network <RED> <WILDCARD> area 0\n! Verificar que el equipo soporte OSPF`;else if(intent==='Crear LACP')c=`! ${vendor}\ninterface range <INTERFACES>\n channel-group <ID> mode active\n! Verificar LACP y puertos compatibles`;else if(intent==='Crear DHCP')c=`! ${vendor}\nip dhcp pool <NOMBRE>\n network <RED> <MASCARA>\n default-router <GATEWAY>\n dns-server <DNS>\n! Reservas y exclusiones deben validarse`;else c=`! ${vendor}\n! Política/ACL solicitada:\n! ${val}\n! Generar reglas exactas después de validar interfaces, zonas y plataforma.`;$('configOut').textContent=c+'\n\nINTENCIÓN: '+val+'\n\nModo: VISTA PREVIA SEGURA. No se ejecuta ningún cambio automáticamente.';toast('Vista previa generada')}
+function runAI(){const s=$('aiSnap').value.trim();if(!s){message('Pega primero una salida o diagnóstico.','error');return}const low=s.toLowerCase();let f=[];const add=(sev,title,evidence,action)=>f.push({sev,title,evidence,action});if(/down|administratively down|err-disabled/.test(low))add('high','Interfaz con estado problemático',['down/err-disabled'],'Revisar interfaz, cableado, errores, STP y política de shutdown antes de aplicar cambios.');if(/ospf.*neighbor|neighbor.*ospf/.test(low)&&(/down|0 neighbor|full.*0/.test(low)))add('high','Posible vecindad OSPF no establecida',['OSPF','neighbor'],'Verificar área, IP, máscara, MTU, timers, autenticación y reachability.');if(/stp|spanning-tree/.test(low)&&/block|blocked|loop|bpdu/.test(low))add('high','Evento relacionado con STP',['STP/BPDU/loop'],'Revisar topología, root bridge, PortFast/BPDU Guard y enlaces redundantes.');if(/dhcp|no.*address|timeout/.test(low))add('medium','Posible problema de DHCP o alcance',['DHCP/timeout'],'Revisar pool, exclusiones, gateway, relay y conectividad de la VLAN.');if(/crc|input error|packet loss|latency/.test(low))add('medium','Indicadores de calidad del enlace',['CRC/error/loss/latency'],'Revisar interfaz, transceptor, cableado, velocidad/dúplex y congestión.');if(!f.length)add('low','No se detectó un patrón crítico automáticamente',['sin patrón crítico'],'Revisar contexto completo, topología y configuración antes de concluir.');const score=Math.max(0,100-f.reduce((n,x)=>n+(x.sev==='high'?25:x.sev==='medium'?12:0),0));$('aiOut').innerHTML=`<div class="panel"><div class="ai-summary"><div class="score">${score}<small>/100</small></div><div><b>Diagnóstico local</b><div class="muted">Resultado basado en evidencia textual; no sustituye la validación del equipo.</div><div>${f.length} hallazgo(s)</div></div></div></div>`+f.map(x=>`<div class="ai-card ${x.sev}"><b>${x.sev==='high'?'🔴':x.sev==='medium'?'🟠':'🟢'} ${x.title}</b><div class="muted">Evidencia: ${x.evidence.join(', ')}</div><div style="margin-top:5px"><b>Acción sugerida:</b> ${x.action}</div></div>`).join('');toast('Diagnóstico generado')}
+function addVlan(){const id=+$('vId').value,name=$('vName').value.trim(),network=$('vNet').value.trim(),gateway=$('vGw').value.trim();if(id<1||id>4094||!name){message('VLAN ID debe estar entre 1 y 4094 y tener nombre.','error');return}if(state.vlans.some(v=>v.id===id)){message('Ya existe esa VLAN.','error');return}state.vlans.push({id,name,network,gateway});persist();toast('VLAN agregada')}
+function renderVlans(){if(!state.vlans.length){$('vlanTable').innerHTML='<div class="empty">No hay VLAN.</div>';return}$('vlanTable').innerHTML='<table><tr><th>ID</th><th>Nombre</th><th>Red</th><th>Gateway</th></tr>'+state.vlans.map(v=>`<tr><td>${v.id}</td><td>${esc(v.name)}</td><td>${esc(v.network)}</td><td>${esc(v.gateway)}</td></tr>`).join('')+'</table>'}
+function addVpn(){const name=$('vpnName').value.trim(),kind=$('vpnKind').value,local=$('vpnLocal').value.trim(),remote=$('vpnRemote').value.trim();if(!name){message('El nombre de la VPN es obligatorio.','error');return}state.vpns.push({name,kind,local,remote});persist();toast('VPN agregada')}
+function renderVpns(){if(!state.vpns.length){$('vpnTable').innerHTML='<div class="empty">No hay VPN.</div>';return}$('vpnTable').innerHTML='<table><tr><th>Nombre</th><th>Tipo</th><th>Local</th><th>Remota</th></tr>'+state.vpns.map(v=>`<tr><td>${esc(v.name)}</td><td>${esc(v.kind)}</td><td>${esc(v.local)}</td><td>${esc(v.remote)}</td></tr>`).join('')+'</table>'}
+function addCost(){const name=$('cName').value.trim(),cat=$('cCat').value.trim()||'network',qty=+$('cQty').value||0,unit=+$('cUnit').value||0;if(!name||qty<1||unit<0){message('Completa nombre, cantidad y costo.','error');return}state.costs.push({name,cat,qty,unit,total:qty*unit});persist();toast('Costo agregado')}
+function renderCosts(){const total=state.costs.reduce((s,x)=>s+x.total,0);if(!state.costs.length){$('costTable').innerHTML='<div class="empty">No hay costos.</div>';return}$('costTable').innerHTML='<table><tr><th>Elemento</th><th>Categoría</th><th>Cantidad</th><th>Unitario</th><th>Total</th></tr>'+state.costs.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.cat)}</td><td>${c.qty}</td><td>$${c.unit.toLocaleString('es-CO')}</td><td>$${c.total.toLocaleString('es-CO')}</td></tr>`).join('')+`<tr><th colspan="4">TOTAL</th><th>$${total.toLocaleString('es-CO')}</th></tr></table>`}
+function topoConfig(p){
+  const t=p.topology||{};
+  return {
+    internet:t.internet!==false,
+    firewalls:Number.isFinite(t.firewalls)?Math.max(0,Math.min(2,t.firewalls)):1,
+    cores:Number.isFinite(t.cores)?Math.max(1,Math.min(2,t.cores)):2,
+    distribution:Number.isFinite(t.distribution)?Math.max(0,Math.min(2,t.distribution)):0,
+    accessPerFloor:Number.isFinite(t.accessPerFloor)?Math.max(1,Math.min(8,t.accessPerFloor)):1,
+    redundancy:t.redundancy!==false,
+    wifi:t.wifi||'auto',servers:t.servers||'auto',endpoints:t.endpoints||'auto'
+  };
+}
+function topologyDerived(p){
+  const t=topoConfig(p), floors=p.buildings*p.zones;
+  const wifi=t.wifi==='si'||(t.wifi==='auto'&&p.ap>0);
+  const servers=t.servers==='si'||(t.servers==='auto'&&p.servers>0);
+  const endpoints=t.endpoints==='si'||(t.endpoints==='auto'&&(p.voip+p.cctv+p.iot>0));
+  const layers=t.distribution>0?'Core → Distribución → Acceso':'Core → Acceso';
+  return {...t,floors,wifi,servers,endpoints,layers,accessTotal:floors*t.accessPerFloor,distributionTotal:p.buildings*t.distribution};
+}
+function makeTopology(p){
+  const d=topologyDerived(p), arr=[];
+  const add=(a,b,link,type,backup=false)=>arr.push({a,b,link,type,backup});
+  // Every requested device receives at least one primary connection. Redundancy only adds secondary paths.
+  if(d.internet){
+    if(d.firewalls>0){
+      for(let f=1;f<=d.firewalls;f++) add('INTERNET / ISP',`BORDE-${f}`,d.firewalls>1?(f===1?'WAN 1':'WAN 2'):'WAN','edge',false);
+    }else{
+      for(let c=1;c<=d.cores;c++) add('INTERNET / ISP',`CORE-${c}`,d.cores>1?(c===1?'WAN 1':'WAN 2'):'WAN','core',c>1);
+    }
+  }
+  if(d.firewalls>0){
+    for(let f=1;f<=d.firewalls;f++){
+      for(let c=1;c<=d.cores;c++){
+        if(c===1 || d.redundancy) add(`BORDE-${f}`,`CORE-${c}`,c===1?'Uplink':'Uplink redundante','core',c>1);
+      }
+    }
+  }
+  if(d.cores===2) add('CORE-1','CORE-2','Inter-Core','core',false);
+  for(let b=1;b<=p.buildings;b++){
+    if(d.distribution>0){
+      for(let x=1;x<=d.distribution;x++){
+        for(let c=1;c<=d.cores;c++){
+          if(c===1 || d.redundancy) add(`CORE-${c}`,`EDIF-${b}-DIST-${x}`,c===1?'Backbone':'Backbone redundante','distribution',c>1);
+        }
+      }
+      for(let z=1;z<=p.zones;z++){
+        for(let a=1;a<=d.accessPerFloor;a++){
+          for(let x=1;x<=d.distribution;x++){
+            if(x===1 || d.redundancy) add(`EDIF-${b}-DIST-${x}`,`EDIF-${b}-PISO-${z}-SW-${a}`,x===1?'Uplink acceso':'Uplink redundante','access',x>1);
+          }
+        }
+      }
+    }else{
+      for(let z=1;z<=p.zones;z++){
+        for(let a=1;a<=d.accessPerFloor;a++){
+          for(let c=1;c<=d.cores;c++){
+            if(c===1 || d.redundancy) add(`CORE-${c}`,`EDIF-${b}-PISO-${z}-SW-${a}`,c===1?'Uplink acceso':'Uplink redundante','access',c>1);
+          }
+        }
+      }
+    }
+    if(d.endpoints){
+      for(let z=1;z<=p.zones;z++){
+        const sw=`EDIF-${b}-PISO-${z}-SW-1`;
+        if(p.voip>0) add(sw,`PISO-${z} · VoIP`,'Endpoints','endpoint');
+        if(p.cctv>0) add(sw,`PISO-${z} · CCTV`,'Endpoints','endpoint');
+        if(p.iot>0) add(sw,`PISO-${z} · IoT`,'Endpoints','endpoint');
+      }
+    }
+    if(d.wifi) for(let z=1;z<=p.zones;z++) add(`EDIF-${b}-PISO-${z}-SW-1`,`PISO-${z} · Wi-Fi`,'PoE / acceso','endpoint');
+  }
+  if(d.servers){
+    add(d.distribution>0?'EDIF-1-DIST-1':'EDIF-1-PISO-1-SW-1','ZONA DE SERVIDORES','Acceso servidores','endpoint');
+  }
+  return arr;
+}
+function topologyNodeIds(p){
+  const d=topologyDerived(p), ids=[];
+  if(d.internet) ids.push('INTERNET / ISP');
+  for(let f=1;f<=d.firewalls;f++) ids.push(`BORDE-${f}`);
+  for(let c=1;c<=d.cores;c++) ids.push(`CORE-${c}`);
+  for(let b=1;b<=p.buildings;b++){
+    if(d.distribution>0) for(let x=1;x<=d.distribution;x++) ids.push(`EDIF-${b}-DIST-${x}`);
+    for(let z=1;z<=p.zones;z++) for(let a=1;a<=d.accessPerFloor;a++) ids.push(`EDIF-${b}-PISO-${z}-SW-${a}`);
+  }
+  if(d.endpoints) for(let b=1;b<=p.buildings;b++) for(let z=1;z<=p.zones;z++){
+    if(p.voip>0) ids.push(`PISO-${z} · VoIP`);
+    if(p.cctv>0) ids.push(`PISO-${z} · CCTV`);
+    if(p.iot>0) ids.push(`PISO-${z} · IoT`);
+  }
+  if(d.wifi) for(let z=1;z<=p.zones;z++) ids.push(`PISO-${z} · Wi-Fi`);
+  if(d.servers) ids.push('ZONA DE SERVIDORES');
+  return [...new Set(ids)];
+}
+function topologyValidation(p,links){
+  const ids=topologyNodeIds(p), connected=new Set();
+  links.forEach(e=>{connected.add(e.a);connected.add(e.b)});
+  const orphan=ids.filter(id=>!connected.has(id));
+  return {ok:orphan.length===0,orphan};
+}
+let topologyView='physical';
+function buildTopology(){const p=currentProject();if(!p){message('Crea un proyecto primero.','error');show('proyecto');return}state.topology=makeTopology(p);persist();setTopologyView(topologyView);toast('Topología dinámica actualizada según los requerimientos del proyecto')}
+function setTopologyView(view){topologyView=view;document.querySelectorAll('.topo-tab').forEach(x=>x.classList.remove('active'));const map={physical:'topoTabPhysical',logical:'topoTabLogical',compact:'topoTabCompact'};$(map[view]).classList.add('active');renderTopology()}
+function topologySvgNode(x,y,w,h,title,sub,kind){const fill={internet:'#dcecff',security:'#fff0d2',core:'#dff4ea',distribution:'#e9eefc',building:'#e7e4ff',floor:'#edf3f7',access:'#f1f7ec',endpoint:'#f3f5f7'}[kind]||'#fff';return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}" stroke="#9fb2c2"/><text x="${x+w/2}" y="${y+22}" text-anchor="middle" class="topo-node-title" fill="#142333">${esc(title)}</text><text x="${x+w/2}" y="${y+40}" text-anchor="middle" class="topo-node-sub">${esc(sub||'')}</text></g>`}
+function lineSvg(x1,y1,x2,y2,label,backup){return `<g><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="topo-link ${backup?'backup':''}"/><text x="${(x1+x2)/2}" y="${(y1+y2)/2-5}" text-anchor="middle" class="topo-link-label">${esc(label)}</text></g>`}
+function renderPhysicalTopology(p){
+  const d=topologyDerived(p), nodeW=154,nodeH=58, gap=24;
+  const buildingW=Math.max(240,p.zones*(d.accessPerFloor*175)+60);
+  const W=Math.max(1200,p.buildings*buildingW+(p.buildings+1)*gap), center=W/2;
+  const topY=40, edgeY=120, coreY=205, distY=d.distribution>0?375:null, floorBase=d.distribution>0?505:335, floorGap=92;
+  const H=floorBase+(p.zones*floorGap)+100;
+  let svg=`<svg class="topology-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Topología dinámica del proyecto"><text x="${center}" y="22" text-anchor="middle" font-size="18" font-weight="800" fill="#142333">Topología física propuesta · ${esc(p.name)}</text>`;
+  let lastY=topY+58;
+  if(d.internet){svg+=topologySvgNode(center-nodeW/2,topY,nodeW,nodeH,'INTERNET / ISP','WAN','internet');lastY=topY+nodeH;}
+  if(d.firewalls>0){const xs=d.firewalls===1?[center]:[center-100,center+100];xs.forEach((x,i)=>svg+=topologySvgNode(x-nodeW/2,edgeY,nodeW,nodeH,`BORDE-${i+1}`,d.firewalls===2?'Firewall / redundante':'Router / Firewall','security'));if(d.internet)xs.forEach(x=>svg+=lineSvg(center,lastY,x,edgeY,'WAN',false));lastY=edgeY+nodeH;}
+  const coreXs=d.cores===1?[center]:[center-150,center+150];coreXs.forEach((x,i)=>svg+=topologySvgNode(x-nodeW/2,coreY,nodeW,nodeH,`CORE-${i+1}`,d.cores===2?'Routing / redundante':'Routing','core'));
+  const sources=d.firewalls>0?(d.firewalls===1?[center]:[center-100,center+100]):[center];sources.forEach((sx,si)=>coreXs.forEach((cx,ci)=>{if(ci===0 || d.redundancy)svg+=lineSvg(sx,lastY,cx,coreY,ci===0?'Uplink':'Redundante',si>0||ci>0)}));
+  let buildingCenters=[];for(let b=0;b<p.buildings;b++){const x=gap+buildingW/2+b*(buildingW+gap);buildingCenters.push(x);const by=d.distribution>0?305:265;svg+=topologySvgNode(x-nodeW/2,by,nodeW,nodeH,`EDIFICIO ${b+1}`,`${p.zones} piso(s) · ${d.accessPerFloor} switch(es)/piso`,'building');}
+  if(d.distribution>0){for(let b=0;b<p.buildings;b++){const bx=buildingCenters[b];const count=d.distribution;const dx=count===1?[bx]:[bx-90,bx+90];dx.forEach((x,i)=>{svg+=topologySvgNode(x-nodeW/2,distY,nodeW,nodeH,`EDIF-${b+1}-DIST-${i+1}`,count===2?'Distribución / redundante':'Distribución','distribution');coreXs.forEach((cx,ci)=>svg+=lineSvg(cx,coreY+58,x,distY,ci===0?'Backbone':'Redundante',ci>0||i>0));});}}
+  for(let b=0;b<p.buildings;b++){const bx=buildingCenters[b];for(let z=1;z<=p.zones;z++){const y=floorBase+(z-1)*floorGap;for(let a=1;a<=d.accessPerFloor;a++){const total=d.accessPerFloor;const ax=bx+(a-(total+1)/2)*175;svg+=topologySvgNode(ax-nodeW/2,y,nodeW,nodeH,`PISO ${z} · SW-${a}`,total>1?'Acceso / redundante':'Acceso','access');if(d.distribution>0){const dx=d.distribution===1?[bx]:[bx-90,bx+90];dx.forEach((x,i)=>{if(i===0 || d.redundancy)svg+=lineSvg(x,distY+58,ax,y,i===0?'Acceso':'Redundante',i>0)});}else{coreXs.forEach((cx,ci)=>{if(ci===0 || d.redundancy)svg+=lineSvg(cx,coreY+58,ax,y,ci===0?'Acceso':'Redundante',ci>0)});}
+        const services=[];if(d.wifi&&a===1)services.push(`Wi-Fi · ${Math.max(1,Math.ceil(p.ap/Math.max(1,d.floors)))} AP`);if(d.endpoints&&a===1){if(p.voip)services.push(`VoIP · ${Math.max(1,Math.ceil(p.voip/Math.max(1,d.floors)))}`);if(p.cctv)services.push(`CCTV · ${Math.max(1,Math.ceil(p.cctv/Math.max(1,d.floors)))}`);if(p.iot)services.push(`IoT · ${Math.max(1,Math.ceil(p.iot/Math.max(1,d.floors)))}`);}if(services.length){svg+=topologySvgNode(ax-nodeW/2,y+62,nodeW,48,services[0],services.slice(1).join(' · ')||'Servicios','endpoint');svg+=lineSvg(ax,y+58,ax,y+62,'Servicios',false)}}}}
+  if(d.servers){const sx=W-130,sy=H-75;svg+=topologySvgNode(sx-nodeW/2,sy,nodeW,nodeH,'SERVIDORES',`${p.servers} equipo(s)`,'endpoint');const anchor=buildingCenters[0];const ay=floorBase+58;svg+=lineSvg(anchor,ay,sx,sy,'Servicios',false)}
+  svg+='</svg>';return svg;
+}
+function renderLogicalTopology(p){
+  const d=topologyDerived(p), nodeW=190,nodeH=58,W=1320,center=W/2;let groups=[];
+  for(let b=1;b<=p.buildings;b++)for(let z=1;z<=p.zones;z++)groups.push({b,z});
+  const cols=Math.min(5,Math.max(2,Math.ceil(Math.sqrt(groups.length))));const rows=Math.ceil(groups.length/cols);const H=250+rows*110;let svg=`<svg class="topology-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Topología lógica dinámica"><text x="${center}" y="24" text-anchor="middle" font-size="18" font-weight="800" fill="#142333">Topología lógica por edificios y pisos</text>`;
+  const coreX=d.cores===1?[center]:[center-150,center+150];coreX.forEach((x,i)=>svg+=topologySvgNode(x-nodeW/2,48,nodeW,nodeH,`CORE-${i+1}`,d.cores===2?'Routing / redundante':'Routing','core'));
+  const cellW=250,cellH=110,startX=(W-(cols*cellW))/2+cellW/2,startY=160;groups.forEach((g,i)=>{const c=i%cols,r=Math.floor(i/cols),x=startX+c*cellW,y=startY+r*cellH;let net='Segmento de usuarios';const plan=state.ipPlan.find(q=>q.building===g.b&&q.zone===g.z);if(plan)net=plan.cidr;svg+=topologySvgNode(x-nodeW/2,y,nodeW,nodeH,`EDIF ${g.b} · PISO ${g.z}`,net,'floor');coreX.forEach((cx,ci)=>{if(ci===0 || d.redundancy)svg+=lineSvg(cx,106,x,y,ci===0?'L3':'L3 redundante',ci>0)});});svg+='</svg>';return svg;
+}
+function renderCompactTopology(p){const d=topologyDerived(p),rows=state.topology.length?state.topology:makeTopology(p);const counts={edge:0,core:0,distribution:0,access:0,endpoint:0};rows.forEach(x=>counts[x.type]=(counts[x.type]||0)+1);return `<div class="topo-ok"><b>Topología dinámica:</b> ${d.layers}. ${p.buildings} edificio(s), ${d.floors} piso(s), ${d.cores} Core, ${d.firewalls} borde(s), ${d.distributionTotal} distribución y ${d.accessTotal} switch(es) de acceso.</div><div style="overflow:auto"><table class="topo-table"><tr><th>Origen</th><th>Destino</th><th>Tipo de enlace</th><th>Lectura</th></tr>${rows.map(e=>`<tr><td><b>${esc(e.a)}</b></td><td><b>${esc(e.b)}</b></td><td>${esc(e.link)}</td><td>${e.backup?'Enlace redundante':'Enlace principal'}</td></tr>`).join('')}</table></div>`}
+function renderTopology(){const p=currentProject();if(!p){$('topologyGraph').innerHTML='<div class="empty">Crea un proyecto y pulsa “Generar / actualizar”.</div>';if($('topologySummary'))$('topologySummary').innerHTML='';return}state.topology=makeTopology(p);const d=topologyDerived(p);const check=topologyValidation(p,state.topology);const totalLinks=state.topology.length;$('topologySummary').innerHTML=`<div class="topo-kpi"><span class="muted">Edificios</span><b>${p.buildings}</b></div><div class="topo-kpi"><span class="muted">Pisos</span><b>${d.floors}</b></div><div class="topo-kpi"><span class="muted">Core</span><b>${d.cores}</b></div><div class="topo-kpi"><span class="muted">Borde</span><b>${d.firewalls}</b></div><div class="topo-kpi"><span class="muted">Acceso</span><b>${d.accessTotal}</b></div><div class="topo-kpi"><span class="muted">Enlaces</span><b>${totalLinks}</b></div>`;if(check.ok)$('topologyGraph').dataset.valid='ok';else $('topologyGraph').dataset.valid='error';if(topologyView==='logical')$('topologyGraph').innerHTML=renderLogicalTopology(p);else if(topologyView==='compact')$('topologyGraph').innerHTML=renderCompactTopology(p);else $('topologyGraph').innerHTML=renderPhysicalTopology(p);if(!check.ok){$('topologyGraph').insertAdjacentHTML('afterbegin',`<div class="topo-warning"><b>Revisar topología:</b> hay elementos sin enlace: ${check.orphan.map(esc).join(', ')}</div>`)}else{$('topologyGraph').insertAdjacentHTML('afterbegin','<div class="topo-ok"><b>Topología validada:</b> todos los elementos solicitados tienen al menos un enlace.</div>')}}
+function topologySvgString(){const p=currentProject();if(!p)throw Error('Crea un proyecto primero.');const raw=renderPhysicalTopology(p).replace(/<svg /,'<svg xmlns="http://www.w3.org/2000/svg" ');const css='<style>.topo-link{stroke:#7890a2;stroke-width:2}.topo-link.backup{stroke-dasharray:7 5}.topo-link-label{font-size:10px;fill:#5b6f80}.topo-node-title{font-weight:800;font-size:13px}.topo-node-sub{font-size:10px;fill:#68788a}</style>';return raw.replace(/(<svg[^>]*>)/, '$1'+css)}
+function safeFileName(name){return (String(name||'NetAuto_Proyecto').replace(/[<>:"/\\|?*\x00-\x1F]/g,'_').trim()||'NetAuto_Proyecto')}
+function exportTopologySVG(){try{const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}const blob=new Blob([topologySvgString()],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=safeFileName(p.name)+'_topologia.svg';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('SVG de topología descargado')}catch(e){message(e.message,'error')}}
+function jpegBytes(dataUrl){const b64=dataUrl.split(',')[1];const bin=atob(b64),out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
+function pdfObjectString(id,body){return `${id} 0 obj\n${body}\nendobj\n`}
+function buildImagePDF(jpeg,width,height,title){
+  const enc=new TextEncoder();const objects=[];const offsets=[0];
+  const pageW=1190,pageH=842,margin=24;const scale=Math.min((pageW-2*margin)/width,(pageH-2*margin)/height);const drawW=width*scale,drawH=height*scale;const x=(pageW-drawW)/2,y=(pageH-drawH)/2;
+  const imageId=5,contentId=6,pageId=3,pagesId=2,catalogId=1;
+  objects[1]=pdfObjectString(catalogId,'<< /Type /Catalog /Pages 2 0 R >>');
+  objects[2]=pdfObjectString(pagesId,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  objects[3]=pdfObjectString(pageId,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im1 5 0 R >> >> /Contents 6 0 R >>`);
+  objects[4]=pdfObjectString(4,`<< /Producer (NetAuto Pro) /Title (${String(title).replace(/[()\\]/g,'')}) >>`);
+  const imgHeader=enc.encode(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${width} /Height ${height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);
+  const imgFooter=enc.encode('\nendstream\nendobj\n');
+  objects[5]={binary:true,data:concat([imgHeader,jpeg,imgFooter])};
+  const content=`q\n${drawW} 0 0 ${drawH} ${x} ${y} cm\n/Im1 Do\nQ\n`;const cb=enc.encode(content);objects[6]={binary:true,data:concat([enc.encode(`6 0 obj\n<< /Length ${cb.length} >>\nstream\n`),cb,enc.encode('endstream\nendobj\n')])};
+  let pdf=enc.encode('%PDF-1.4\n%\xFF\xFF\xFF\xFF\n');let offs=[];for(let i=1;i<=6;i++){offs[i]=pdf.length;const d=typeof objects[i]==='string'?enc.encode(objects[i]):objects[i].data;pdf=concat([pdf,d])}const xref=pdf.length;let tail=`xref\n0 7\n0000000000 65535 f \n`;for(let i=1;i<=6;i++)tail+=String(offs[i]).padStart(10,'0')+' 00000 n \n';tail+=`trailer\n<< /Size 7 /Root 1 0 R /Info 4 0 R >>\nstartxref\n${xref}\n%%EOF`;pdf=concat([pdf,enc.encode(tail)]);return pdf;
+}
+function topologyDetailSvg(p,b){
+  const d=topologyDerived(p), nodeW=190,nodeH=62,gap=34;
+  const swCount=d.accessPerFloor, floors=p.zones;
+  const floorCols=Math.min(4,Math.max(1,swCount));
+  const floorRows=Math.ceil(swCount/floorCols);
+  const colW=swCount>1?Math.max(230,swCount*175):260;
+  const W=Math.max(1500,Math.max(colW*floorCols+160,1200));
+  const topY=55, coreY=145, distY=255, floorStart=d.distribution>0?380:285;
+  const floorStep=Math.max(150,110+floorRows*28);
+  const H=floorStart+floors*floorStep+150;
+  const center=W/2;
+  let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Detalle de topología del edificio ${b}">`;
+  svg+=`<rect width="100%" height="100%" fill="#ffffff"/>`;
+  svg+=`<text x="${center}" y="28" text-anchor="middle" font-size="22" font-weight="800" fill="#142333">${esc(p.name)} · EDIFICIO ${b}</text>`;
+  svg+=`<text x="${center}" y="48" text-anchor="middle" font-size="12" fill="#566">Detalle completo · ${floors} piso(s) · ${swCount} switch(es) de acceso por piso · IP Planning no modificado</text>`;
+  const cores=d.cores===1?[center]:[center-170,center+170];
+  cores.forEach((x,i)=>svg+=topologySvgNode(x-nodeW/2,coreY,nodeW,nodeH,`CORE-${i+1}`,d.cores===2?'Routing / redundante':'Routing','core'));
+  if(d.internet){
+    svg+=topologySvgNode(center-nodeW/2,topY,nodeW,nodeH,'INTERNET / ISP','WAN','internet');
+    cores.forEach((x,i)=>svg+=lineSvg(center,topY+nodeH,x,coreY,i===0?'WAN':'WAN redundante',i>0));
+  }
+  if(d.firewalls>0){
+    const fx=d.firewalls===1?[center]:[center-115,center+115];
+    fx.forEach((x,i)=>svg+=topologySvgNode(x-nodeW/2,topY,nodeW,nodeH,`BORDE-${i+1}`,d.firewalls===2?'Firewall / redundante':'Router / Firewall','security'));
+    cores.forEach((cx,ci)=>fx.forEach((x,fi)=>{if(ci===0||d.redundancy)svg+=lineSvg(x,topY+nodeH,cx,coreY,ci===0?'Uplink':'Redundante',ci>0||fi>0)}));
+  }
+  const bx=center;
+  if(d.distribution>0){
+    const dx=d.distribution===1?[bx]:[bx-120,bx+120];
+    dx.forEach((x,i)=>{svg+=topologySvgNode(x-nodeW/2,distY,nodeW,nodeH,`EDIF-${b}-DIST-${i+1}`,d.distribution===2?'Distribución / redundante':'Distribución','distribution');cores.forEach((cx,ci)=>{if(ci===0||d.redundancy)svg+=lineSvg(cx,coreY+nodeH,x,distY,ci===0?'Backbone':'Redundante',ci>0||i>0)})});
+  }
+  for(let z=1;z<=floors;z++){
+    const y=floorStart+(z-1)*floorStep;
+    svg+=`<text x="${center}" y="${y-18}" text-anchor="middle" font-size="16" font-weight="800" fill="#245b82">PISO ${z}</text>`;
+    const total=swCount;
+    const startX=center-((Math.min(floorCols,total)-1)*175)/2;
+    for(let a=1;a<=total;a++){
+      const c=(a-1)%floorCols,r=Math.floor((a-1)/floorCols),x=startX+c*175,y2=y+r*105;
+      svg+=topologySvgNode(x-nodeW/2,y2,nodeW,nodeH,`PISO ${z} · SW-${a}`,total>1?'Acceso / redundante':'Acceso','access');
+      if(d.distribution>0){const dx=d.distribution===1?[bx]:[bx-120,bx+120];dx.forEach((dist,i)=>{if(i===0||d.redundancy)svg+=lineSvg(dist,distY+nodeH,x,y2,i===0?'Uplink acceso':'Redundante',i>0)});}else{cores.forEach((cx,ci)=>{if(ci===0||d.redundancy)svg+=lineSvg(cx,coreY+nodeH,x,y2,ci===0?'Uplink acceso':'Redundante',ci>0)});}
+    }
+    const services=[];
+    if(d.wifi)services.push(`Wi-Fi · ${Math.max(1,Math.ceil(p.ap/Math.max(1,d.floors))) } AP`);
+    if(d.endpoints){if(p.voip)services.push(`VoIP · ${Math.max(1,Math.ceil(p.voip/Math.max(1,d.floors)))}`);if(p.cctv)services.push(`CCTV · ${Math.max(1,Math.ceil(p.cctv/Math.max(1,d.floors)))}`);if(p.iot)services.push(`IoT · ${Math.max(1,Math.ceil(p.iot/Math.max(1,d.floors)))}`);}
+    if(services.length){const sx=W-180,sy=y+Math.max(0,(floorRows-1)*105);svg+=topologySvgNode(sx-nodeW/2,sy,nodeW,58,services[0],services.slice(1).join(' · ')||'Servicios','endpoint');const ax=startX;svg+=lineSvg(ax+nodeW/2,sy, sx-nodeW/2,sy,'Servicios',false)}
+  }
+  if(d.servers){const sy=H-90;svg+=topologySvgNode(center-nodeW/2,sy,nodeW,nodeH,'ZONA DE SERVIDORES',`${p.servers} equipo(s)`,'endpoint');const target=d.distribution>0?distY+nodeH:floorStart;svg+=lineSvg(center,target,center,sy,'Servicios',false);}
+  svg+=`<g transform="translate(40 ${H-48})"><circle cx="8" cy="0" r="6" fill="#dcecff" stroke="#9fb2c2"/><text x="20" y="4" font-size="11" fill="#566">Internet / ISP</text><circle cx="150" cy="0" r="6" fill="#fff0d2" stroke="#9fb2c2"/><text x="162" y="4" font-size="11" fill="#566">Seguridad</text><circle cx="260" cy="0" r="6" fill="#dff4ea" stroke="#9fb2c2"/><text x="272" y="4" font-size="11" fill="#566">Core</text><circle cx="335" cy="0" r="6" fill="#e9eefc" stroke="#9fb2c2"/><text x="347" y="4" font-size="11" fill="#566">Distribución</text><circle cx="450" cy="0" r="6" fill="#f1f7ec" stroke="#9fb2c2"/><text x="462" y="4" font-size="11" fill="#566">Acceso</text><line x1="540" y1="0" x2="575" y2="0" stroke="#7890a2" stroke-width="2"/><text x="585" y="4" font-size="11" fill="#566">Enlace principal</text><line x1="700" y1="0" x2="735" y2="0" stroke="#7890a2" stroke-width="2" stroke-dasharray="7 5"/><text x="745" y="4" font-size="11" fill="#566">Redundante</text></g>`;
+  svg+='</svg>';return svg;
+}
+function svgToJpeg(svg,maxPx=11000){
+  return new Promise((resolve,reject)=>{
+    const doc=new DOMParser().parseFromString(svg,'image/svg+xml'),root=doc.documentElement;
+    const width=parseFloat(root.getAttribute('width'))||1200,height=parseFloat(root.getAttribute('height'))||800;
+    const scale=Math.min(4,maxPx/Math.max(width,height));
+    const img=new Image();
+    img.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);resolve({jpeg:jpegBytes(canvas.toDataURL('image/jpeg',0.96)),width:canvas.width,height:canvas.height});}catch(e){reject(e)}};
+    img.onerror=()=>reject(new Error('No fue posible rasterizar una página de topología.'));
+    img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  });
+}
+function buildMultiImagePDF(pages,title){
+  const enc=new TextEncoder(),objs=[];const pageW=1190,pageH=842,margin=24;let next=1;const catalogId=next++,pagesId=next++,infoId=next++;
+  const pageMeta=[];
+  for(let i=0;i<pages.length;i++){const imageId=next++,contentId=next++,pageId=next++;pageMeta.push({imageId,contentId,pageId,page:pages[i]});}
+  objs[catalogId]=pdfObjectString(catalogId,`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);
+  const kids=pageMeta.map(x=>`${x.pageId} 0 R`).join(' ');objs[pagesId]=pdfObjectString(pagesId,`<< /Type /Pages /Kids [${kids}] /Count ${pageMeta.length} >>`);objs[infoId]=pdfObjectString(infoId,`<< /Producer (NetAuto Pro) /Title (${String(title).replace(/[()\\]/g,'')}) >>`);
+  for(const m of pageMeta){const {imageId,contentId,pageId,page}=m;const scale=Math.min((pageW-2*margin)/page.width,(pageH-2*margin)/page.height);const drawW=page.width*scale,drawH=page.height*scale,x=(pageW-drawW)/2,y=(pageH-drawH)/2;const cb=enc.encode(`q\n${drawW} 0 0 ${drawH} ${x} ${y} cm\n/Im${imageId} Do\nQ\n`);objs[imageId]={data:concat([enc.encode(`${imageId} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${page.width} /Height ${page.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${page.jpeg.length} >>\nstream\n`),page.jpeg,enc.encode('\nendstream\nendobj\n')])};objs[contentId]={data:concat([enc.encode(`${contentId} 0 obj\n<< /Length ${cb.length} >>\nstream\n`),cb,enc.encode('endstream\nendobj\n')])};objs[pageId]=pdfObjectString(pageId,`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im${imageId} ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`)}
+  const maxId=next-1;let pdf=enc.encode('%PDF-1.4\n%\xFF\xFF\xFF\xFF\n'),offs=[];for(let i=1;i<=maxId;i++){if(!objs[i])continue;offs[i]=pdf.length;const d=typeof objs[i]==='string'?enc.encode(objs[i]):objs[i].data;pdf=concat([pdf,d])}const xref=pdf.length;let tail=`xref\n0 ${maxId+1}\n0000000000 65535 f \n`;for(let i=1;i<=maxId;i++)tail+=(offs[i]||0).toString().padStart(10,'0')+' 00000 n \n';tail+=`trailer\n<< /Size ${maxId+1} /Root ${catalogId} 0 R /Info ${infoId} 0 R >>\nstartxref\n${xref}\n%%EOF`;return concat([pdf,enc.encode(tail)]);
+}
+async function exportTopologyPDF(){try{const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}const pages=[];pages.push(await svgToJpeg(topologySvgString(),10000));for(let b=1;b<=p.buildings;b++)pages.push(await svgToJpeg(topologyDetailSvg(p,b),10000));const pdf=buildMultiImagePDF(pages,p.name+' - Topología completa');const blob=new Blob([pdf],{type:'application/pdf'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=safeFileName(p.name)+'_topologia_completa_detallada.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);toast(`PDF completo generado: ${pages.length} página(s), con resumen y detalle por edificio.`)}catch(e){message('No fue posible generar el PDF detallado: '+e.message,'error')}}
+
+function exportTopologySVGPackage(){try{const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}const files=[{name:safeFileName(p.name)+'_topologia_completa.svg',data:topologySvgString()}];for(let b=1;b<=p.buildings;b++)files.push({name:safeFileName(p.name)+`_edificio_${b}_detalle.svg`,data:topologyDetailSvg(p,b)});const blob=new Blob([zipStore(files)],{type:'application/zip'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=safeFileName(p.name)+'_topologia_SVG_detallada.zip';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);toast(`Paquete SVG generado: ${files.length} archivo(s), todos vectoriales y ampliables sin pérdida.`)}catch(e){message('No fue posible generar el paquete SVG: '+e.message,'error')}}
+function printTopology(){try{const p=currentProject();if(!p){message('Crea un proyecto primero.','error');return}const svg=topologySvgString();const w=window.open('','_blank');if(!w){message('El navegador bloqueó la ventana de impresión. Permite ventanas emergentes para NetAuto Pro.','error');return}w.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>${esc(p.name)} - Topología</title><style>@page{size:A3 landscape;margin:10mm}body{margin:0;font-family:Arial,sans-serif;background:#fff}h1{font-size:20px;margin:0 0 8px;text-align:center}p{font-size:12px;text-align:center;color:#566}svg{width:100%;height:auto;display:block}</style></head><body><h1>${esc(p.name)} · Topología física propuesta</h1><p>Documento generado por NetAuto Pro · IP Planning no modificado</p>${svg}
+</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),300)}catch(e){message(e.message,'error')}}
+
+/* ===== TOPOLOGÍA CLARA v1.0 — capa visual reemplazable; IP PLANNING intacto ===== */
+function cleanSvgNode(x,y,w,h,title,sub,kind='access'){
+  const fills={internet:'#e7f1ff',security:'#fff4dc',core:'#e7f7ee',distribution:'#edf0ff',building:'#f2efff',access:'#f4f7f9',endpoint:'#eef8f2'};
+  const strokes={internet:'#6b91bb',security:'#c99a42',core:'#5b9b76',distribution:'#7b83ba',building:'#7b6eb0',access:'#7c8e9e',endpoint:'#5d9874'};
+  const fill=fills[kind]||fills.access, stroke=strokes[kind]||strokes.access;
+  return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/><text x="${x+w/2}" y="${y+23}" text-anchor="middle" font-size="13" font-weight="800" fill="#172433">${esc(title)}</text><text x="${x+w/2}" y="${y+42}" text-anchor="middle" font-size="10.5" fill="#5c6d7d">${esc(sub)}</text></g>`;
+}
+function cleanSvgLine(x1,y1,x2,y2,label='',backup=false){
+  const mx=(x1+x2)/2,my=(y1+y2)/2;
+  return `<g><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#718395" stroke-width="2.2" ${backup?'stroke-dasharray="8 6"':''}/>${label?`<rect x="${mx-48}" y="${my-8}" width="96" height="16" rx="8" fill="#fff" opacity=".92"/><text x="${mx}" y="${my+3.5}" text-anchor="middle" font-size="9.5" fill="#596c7d">${esc(label)}</text>`:''}</g>`;
+}
+function renderPhysicalTopology(p){
+  const d=topologyDerived(p);
+  const W=1600, pad=55, top=35;
+  const maxCols=2, cardW=720, gapX=45, gapY=45;
+  const cardH=Math.max(330,190+p.zones*48);
+  const rows=Math.ceil(p.buildings/maxCols);
+  const H=top+210+rows*cardH+(rows-1)*gapY+70;
+  const cx=W/2;
+  let svg=`<svg class="topology-svg topology-svg-clean" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Topología general ordenada del proyecto">`;
+  svg+=`<rect width="100%" height="100%" fill="#ffffff"/>`;
+  svg+=`<text x="${cx}" y="${top}" text-anchor="middle" font-size="24" font-weight="800" fill="#142333">${esc(p.name)} · TOPOLOGÍA GENERAL</text>`;
+  svg+=`<text x="${cx}" y="${top+22}" text-anchor="middle" font-size="11" fill="#607080">Vista de arquitectura · primero se lee de arriba hacia abajo y luego edificio por edificio</text>`;
+
+  // Backbone superior: una sola ruta visual, sin líneas cruzadas.
+  const layerY=[top+58,top+126,top+194];
+  if(d.internet){
+    svg+=cleanSvgNode(cx-115,layerY[0]-26,230,56,'INTERNET / ISP','Entrada WAN','internet');
+  }
+  const edgeXs=d.firewalls===0?[]:(d.firewalls===1?[cx]:[cx-145,cx+145]);
+  edgeXs.forEach((x,i)=>svg+=cleanSvgNode(x-105,layerY[1]-28,210,56,`BORDE-${i+1}`,d.firewalls===2?'Firewall':'Firewall / borde','security'));
+  const coreXs=d.cores===1?[cx]:[cx-145,cx+145];
+  coreXs.forEach((x,i)=>svg+=cleanSvgNode(x-105,layerY[2]-28,210,56,`CORE-${i+1}`,d.cores===2?'Routing':'Routing','core'));
+  // Solo conectores ortogonales cortos entre capas, nunca diagonales sobre nodos.
+  if(d.internet){
+    if(edgeXs.length) edgeXs.forEach((x,i)=>svg+=cleanSvgLine(cx,layerY[0]+30,x,layerY[1]-28,i?'WAN 2':'WAN',i>0));
+    else coreXs.forEach((x,i)=>svg+=cleanSvgLine(cx,layerY[0]+30,x,layerY[2]-28,i?'WAN 2':'WAN',i>0));
+  }
+  if(edgeXs.length) edgeXs.forEach((x,fi)=>coreXs.forEach((c,ci)=>{ if(ci===0||d.redundancy) svg+=cleanSvgLine(x,layerY[1]+28,c,layerY[2]-28,ci===0?'Uplink':'Redundante',ci>0||fi>0); }));
+
+  const firstY=top+235;
+  for(let b=1;b<=p.buildings;b++){
+    const idx=b-1,row=Math.floor(idx/maxCols),col=idx%maxCols;
+    const rowCount=Math.min(maxCols,p.buildings-row*maxCols);
+    const startX=(W-(rowCount*cardW+(rowCount-1)*gapX))/2;
+    const x=startX+col*(cardW+gapX), y=firstY+row*(cardH+gapY);
+    svg+=`<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="16" fill="#fbfdff" stroke="#c9d6e1" stroke-width="1.5"/>`;
+    svg+=`<text x="${x+22}" y="${y+30}" font-size="17" font-weight="800" fill="#263c4e">EDIFICIO ${b}</text>`;
+    svg+=`<text x="${x+22}" y="${y+49}" font-size="10.5" fill="#687987">${p.zones} piso(s) · ${d.accessPerFloor} acceso(s) por piso</text>`;
+
+    // Flujo interno del edificio: Core -> Distribución -> Acceso -> Servicios.
+    const hub=cx;
+    let yy=y+70;
+    if(d.distribution>0){
+      const dx=d.distribution===1?[x+cardW/2]:[x+cardW/2-105,x+cardW/2+105];
+      dx.forEach((xx,i)=>svg+=cleanSvgNode(xx-88,yy,176,50,`DIST-${i+1}`,d.distribution===2?'Distribución':'Distribución','distribution'));
+      svg+=`<line x1="${hub}" y1="${y+60}" x2="${hub}" y2="${yy}" class="topo-link"/>`;
+      yy+=67;
+    } else {
+      svg+=`<line x1="${hub}" y1="${y+60}" x2="${hub}" y2="${yy}" class="topo-link"/>`;
+      svg+=cleanSvgNode(hub-88,yy,176,50,'ACCESO','Directo desde Core','access');
+      yy+=67;
+    }
+    // Barra de acceso: cada piso es una fila independiente y no se dibujan enlaces cruzados.
+    for(let z=1;z<=p.zones;z++){
+      const fy=yy+(z-1)*48;
+      const svc=[];
+      if(d.wifi&&p.ap)svc.push(`Wi-Fi ${Math.ceil(p.ap/(p.buildings*p.zones))}`);
+      if(d.endpoints){if(p.voip)svc.push(`VoIP ${Math.ceil(p.voip/(p.buildings*p.zones))}`);if(p.cctv)svc.push(`CCTV ${Math.ceil(p.cctv/(p.buildings*p.zones))}`);if(p.iot)svc.push(`IoT ${Math.ceil(p.iot/(p.buildings*p.zones))}`);}
+      svg+=`<rect x="${x+20}" y="${fy}" width="${cardW-40}" height="36" rx="9" fill="#f3f7fa" stroke="#d5e0e7"/>`;
+      svg+=`<text x="${x+35}" y="${fy+23}" font-size="11" font-weight="800" fill="#30485b">PISO ${z}</text>`;
+      svg+=`<text x="${x+120}" y="${fy+23}" font-size="10" fill="#687987">${d.accessPerFloor} switch(es) de acceso</text>`;
+      if(svc.length)svg+=`<text x="${x+cardW-35}" y="${fy+23}" text-anchor="end" font-size="9.5" fill="#5f7d6b">${esc(svc.join(' · '))}</text>`;
+    }
+    const footerY=y+cardH-28;
+    svg+=`<text x="${x+22}" y="${footerY}" font-size="9.5" fill="#71808d">Detalle completo disponible por edificio en PDF/SVG.</text>`;
+  }
+  svg+=`<text x="${pad}" y="${H-24}" font-size="10" fill="#5d6e7e">Regla visual: ningún enlace atraviesa equipos; cada edificio y cada piso tiene su propia zona de lectura.</text>`;
+  svg+='</svg>'; return svg;
+}
+
+function topologyDetailSvg(p,b){
+  const d=topologyDerived(p);
+  const sw=Math.max(1,d.accessPerFloor);
+  const nodeW=184,nodeH=56, side=70, gap=28;
+  const floorW=Math.max(980,side*2+sw*nodeW+(sw-1)*gap);
+  const W=floorW;
+  const floorH=138, floorGap=18;
+  const topY=72, coreY=158, distY=245, floorStart=d.distribution>0?332:270;
+  const serverH=d.servers?100:0;
+  const H=floorStart+p.zones*(floorH+floorGap)+serverH+90;
+  const cx=W/2;
+  let svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Detalle ordenado de topología del edificio ${b}">`;
+  svg+=`<rect width="100%" height="100%" fill="#ffffff"/>`;
+  svg+=`<text x="${cx}" y="30" text-anchor="middle" font-size="23" font-weight="800" fill="#142333">${esc(p.name)} · EDIFICIO ${b}</text>`;
+  svg+=`<text x="${cx}" y="50" text-anchor="middle" font-size="11" fill="#607080">Detalle jerárquico · de arriba hacia abajo · buses y enlaces ortogonales sin cruces</text>`;
+
+  if(d.internet)svg+=cleanSvgNode(cx-105,topY-30,210,56,'INTERNET / ISP','WAN','internet');
+  const edgeXs=d.firewalls===0?[]:(d.firewalls===1?[cx]:[cx-145,cx+145]);
+  edgeXs.forEach((x,i)=>svg+=cleanSvgNode(x-100,topY+55,200,56,`BORDE-${i+1}`,d.firewalls===2?'Firewall':'Firewall / borde','security'));
+  const cores=d.cores===1?[cx]:[cx-145,cx+145];
+  cores.forEach((x,i)=>svg+=cleanSvgNode(x-100,coreY-28,200,56,`CORE-${i+1}`,d.cores===2?'Routing':'Routing','core'));
+  if(d.internet){
+    if(edgeXs.length)edgeXs.forEach((x,i)=>svg+=cleanSvgLine(cx,topY+26,x,topY+55,i?'WAN 2':'WAN',i>0));
+    else cores.forEach((x,i)=>svg+=cleanSvgLine(cx,topY+26,x,coreY-28,i?'WAN 2':'WAN',i>0));
+  }
+  if(edgeXs.length)edgeXs.forEach((x,fi)=>cores.forEach((c,ci)=>{if(ci===0||d.redundancy)svg+=cleanSvgLine(x,topY+111,c,coreY-28,ci===0?'Uplink':'Redundante',ci>0||fi>0)}));
+
+  let trunks=[cores[0]];
+  if(d.distribution>0){
+    const dist=d.distribution===1?[cx]:[cx-115,cx+115];
+    dist.forEach((x,i)=>svg+=cleanSvgNode(x-100,distY-28,200,56,`DIST-${i+1}`,d.distribution===2?'Distribución':'Distribución','distribution'));
+    cores.forEach((c,ci)=>dist.forEach((x,di)=>{if(ci===0||d.redundancy)svg+=cleanSvgLine(c,coreY+28,x,distY-28,ci===0?'Backbone':'Redundante',ci>0||di>0)}));
+    trunks=d.redundancy&&dist.length>1?dist:dist.slice(0,1);
+  }
+
+  // Troncales verticales permanentes. Los enlaces a switches salen de un bus horizontal por piso.
+  const primaryX=trunks[0];
+  const secondaryX=(d.redundancy&&trunks.length>1)?trunks[1]:null;
+  const trunkTop=d.distribution>0?distY+28:coreY+28;
+  const trunkBottom=floorStart+p.zones*(floorH+floorGap)-floorGap/2;
+  svg+=`<line x1="${primaryX}" y1="${trunkTop}" x2="${primaryX}" y2="${trunkBottom}" class="topo-link"/>`;
+  if(secondaryX!==null)svg+=`<line x1="${secondaryX}" y1="${trunkTop}" x2="${secondaryX}" y2="${trunkBottom}" class="topo-link backup"/>`;
+
+  for(let z=1;z<=p.zones;z++){
+    const y=floorStart+(z-1)*(floorH+floorGap);
+    svg+=`<rect x="25" y="${y}" width="${W-50}" height="${floorH}" rx="14" fill="#fbfcfd" stroke="#d4dfe7"/>`;
+    svg+=`<text x="45" y="${y+24}" font-size="15" font-weight="800" fill="#245b82">PISO ${z}</text>`;
+    svg+=`<text x="45" y="${y+42}" font-size="10" fill="#6b7c89">${sw} switch(es) de acceso · bus de piso independiente</text>`;
+    const busY=y+68;
+    const busLeft=45,busRight=W-45;
+    svg+=`<line x1="${busLeft}" y1="${busY}" x2="${busRight}" y2="${busY}" class="topo-link"/>`;
+    svg+=`<line x1="${primaryX}" y1="${trunkTop}" x2="${primaryX}" y2="${busY}" class="topo-link"/>`;
+    if(secondaryX!==null)svg+=`<line x1="${secondaryX}" y1="${trunkTop}" x2="${secondaryX}" y2="${busY}" class="topo-link backup"/>`;
+    const start=busLeft+25;
+    const total=sw*nodeW+(sw-1)*gap;
+    const sx=Math.max(start,(W-total)/2);
+    for(let a=1;a<=sw;a++){
+      const x=sx+(a-1)*(nodeW+gap), centerX=x+nodeW/2;
+      svg+=`<line x1="${centerX}" y1="${busY}" x2="${centerX}" y2="${y+76}" class="topo-link"/>`;
+      svg+=cleanSvgNode(x,y+76,nodeW,nodeH,`SW-${a}`,sw>1?'Acceso':'Acceso principal','access');
+    }
+    const svc=[];
+    if(d.wifi&&p.ap)svc.push(`Wi-Fi ${Math.ceil(p.ap/(p.buildings*p.zones))} AP`);
+    if(d.endpoints){if(p.voip)svc.push(`VoIP ${Math.ceil(p.voip/(p.buildings*p.zones))}`);if(p.cctv)svc.push(`CCTV ${Math.ceil(p.cctv/(p.buildings*p.zones))}`);if(p.iot)svc.push(`IoT ${Math.ceil(p.iot/(p.buildings*p.zones))}`);}
+    if(svc.length)svg+=`<text x="${W-45}" y="${y+24}" text-anchor="end" font-size="9.5" fill="#5f7d6b">${esc(svc.join(' · '))}</text>`;
+  }
+
+  if(d.servers){
+    const sy=H-serverH-55;
+    svg+=cleanSvgNode(cx-150,sy,300,58,'SERVIDORES',`${p.servers} equipo(s) · zona central`,'endpoint');
+    const anchor=primaryX;
+    svg+=cleanSvgLine(anchor,trunkBottom,cx,sy,'Servicios',false);
+  }
+  svg+=`<g transform="translate(45 ${H-22})"><line x1="0" y1="0" x2="34" y2="0" stroke="#718395" stroke-width="2"/><text x="43" y="4" font-size="10" fill="#5d6e7e">Enlace principal</text><line x1="145" y1="0" x2="179" y2="0" stroke="#718395" stroke-width="2" stroke-dasharray="8 6"/><text x="188" y="4" font-size="10" fill="#5d6e7e">Redundante</text></g>`;
+  svg+='</svg>';return svg;
+}
+function topologySvgString(){const p=currentProject();if(!p)throw Error('Crea un proyecto primero.');return renderPhysicalTopology(p)}
+
+function renderProjectSelect(){const sel=$('projectSelect');if(!sel)return;sel.innerHTML='<option value="">Selecciona un proyecto</option>'+state.projects.map(p=>`<option value="${p.id}" ${p.id===state.current?'selected':''}>${esc(p.name)}</option>`).join('')}
+function loadSelectedProject(){const id=$('projectSelect').value;if(!id){message('Selecciona un proyecto.','error');return}state.current=id;persist();fillProject(currentProject());toast('Proyecto cargado')}
+function deleteCurrentProject(){const p=currentProject();if(!p){message('No hay proyecto actual.','error');return}if(!confirm('¿Eliminar el proyecto actual? Sus datos locales se eliminarán.'))return;state.projects=state.projects.filter(x=>x.id!==p.id);state.current=state.projects[0]?.id||null;state.ipPlan=[];state.analysis=null;state.topology=[];persist();toast('Proyecto eliminado')}
+function renderAll(){const p=currentProject();renderProjectSelect();$('sProjects').textContent=state.projects.length;$('sZones').textContent=p?p.buildings*p.zones:0;$('sUsers').textContent=p?(p.users||0).toLocaleString('es-CO'):0;$('sIP').textContent=state.ipPlan.length;$('sVLAN').textContent=state.vlans.length;$('sDev').textContent=state.devices.length;$('sBW').textContent=state.analysis?state.analysis.recommended.toLocaleString('es-CO')+' Mbps':'0 Mbps';$('sVal').textContent=state.analysis?'LISTO':'—';if(p){fillProject(p);$('homeProject').innerHTML=`<b>${esc(p.name)}</b><br>${esc(p.env)} · ${p.buildings} edificio(s) · ${p.buildings*p.zones} zona(s) · ${p.users.toLocaleString('es-CO')} usuarios`;renderAnalysis()}else{$('homeProject').innerHTML='<div class="empty">Aún no hay proyecto.</div>'}renderIP();renderDevices();refreshDeviceSelectors();renderVlans();renderVpns();renderCosts();renderTopology()}
+function escXml(s){return esc(s).replace(/'/g,'&apos;')}
+function crc32(bytes){let table=crc32.table;if(!table){table=crc32.table=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xedb88320^(c>>>1)):(c>>>1);table[n]=c>>>0}}let c=0xffffffff;for(const b of bytes)c=table[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0}
+function u16(n){return new Uint8Array([n&255,(n>>>8)&255])}function u32(n){return new Uint8Array([n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255])}
+function concat(arrs){let n=arrs.reduce((s,a)=>s+a.length,0),o=new Uint8Array(n),p=0;for(const a of arrs){o.set(a,p);p+=a.length}return o}
+function zipStore(files){const enc=new TextEncoder(),locals=[],centrals=[];let offset=0;for(const f of files){const name=enc.encode(f.name),data=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(data);const lh=concat([u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),name,data]);locals.push(lh);const ch=concat([u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name]);centrals.push(ch);offset+=lh.length}const cd=concat(centrals);const local=concat(locals);const end=concat([u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cd.length),u32(local.length),u16(0)]);return concat([local,cd,end])}
+function cell(v){return `<c t="inlineStr"><is><t>${escXml(v)}</t></is></c>`}function sheetXml(rows){return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${rows.map(r=>`<row>${r.map(cell).join('')}</row>`).join('')}</sheetData></worksheet>`}
+function workbookXml(names){return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${names.map((n,i)=>`<sheet name="${escXml(n)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')}</sheets></workbook>`}
+function relsXml(n){return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${Array.from({length:n},(_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')}</Relationships>`}
+function contentTypesXml(n){return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${Array.from({length:n},(_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`}
+function exportXLSX(){const p=currentProject();if(!p){message('Crea un proyecto antes de exportar.','error');show('proyecto');return}if(!state.ipPlan.length){try{generateIPPlan()}catch{return}}const a=state.analysis||{};const rows=[];rows.push(['NetAuto Pro v1.1','Direccionamiento generado desde el proyecto']);rows.push(['Proyecto',p.name]);rows.push(['Entorno',p.env]);rows.push(['Edificios',p.buildings]);rows.push(['Zonas por edificio',p.zones]);rows.push(['Usuarios',p.users]);rows.push(['Crecimiento %',p.growth]);rows.push(['IPv4 base',p.cidr]);rows.push(['IPv6 base',p.ipv6]);rows.push([]);const ipRows=[['#','Edificio','Piso / zona','Propósito','Usuarios','Red','Gateway','Primer host de usuarios','Último host','Broadcast','IPv6 /64','Hosts utilizables','IP libres']];state.ipPlan.forEach(r=>ipRows.push([r.id,r.building,r.zone,r.purpose,r.users,r.cidr,r.gateway,r.first,r.last,r.broadcast,r.ipv6||'',r.usable,r.free]));const bw=[['Componente','Mbps'],['Usuarios concurrentes',a.userBW||0],['VoIP',a.voipBW||0],['CCTV',a.cctvBW||0],['Wi-Fi/AP',a.apBW||0],['IoT',a.iotBW||0],['Servidores',a.serverBW||0],['Recomendado',a.recommended||0]];const vlan=[['ID','Nombre','Red','Gateway'],...state.vlans.map(v=>[v.id,v.name,v.network,v.gateway])];const dev=[['Hostname','IP','Fabricante','Modelo','Rol','Capacidades'],...state.devices.map(d=>[d.host,d.ip,d.vendor,d.model,d.role,capabilities(d.vendor,d.model).join(', ')])];const topo=[['Origen','Destino','Enlace'],...state.topology.map(t=>[t.a,t.b,t.link])];const val=[['Indicador','Resultado'],['Usuarios de diseño',a.designUsers||0],['Subredes',state.ipPlan.length],['VLAN',state.vlans.length],['Ancho recomendado Mbps',a.recommended||0],['Base IPv4',p.cidr]];const v6=[['#','Edificio','Piso / zona','Prefijo IPv6 /64'],...state.ipPlan.map(r=>[r.id,r.building,r.zone,r.ipv6||''])];const names=['Resumen','IP Planning','IPv6 Planning','Ancho de banda','VLAN','Equipos','Topología','Validación'];const sheets=[rows,ipRows,v6,bw,vlan,dev,topo,val];const files=[{name:'[Content_Types].xml',data:contentTypesXml(sheets.length)},{name:'_rels/.rels',data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},{name:'xl/workbook.xml',data:workbookXml(names)},{name:'xl/_rels/workbook.xml.rels',data:relsXml(sheets.length)}];sheets.forEach((s,i)=>files.push({name:`xl/worksheets/sheet${i+1}.xml`,data:sheetXml(s)}));const blob=new Blob([zipStore(files)],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});const url=URL.createObjectURL(blob);const ael=document.createElement('a');ael.href=url;const safeName=(p.name.replace(/[<>:\"/\\|?*\x00-\x1F]/g,'_').trim()||'NetAuto_Proyecto');ael.download=safeName+'_direccionamiento.xlsx';document.body.appendChild(ael);ael.click();ael.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Excel generado correctamente')}
+
+/* ===== NetAuto Pro v1.1 — módulos nuevos; IP Planning y Topología congelados ===== */
+function ip4Parts(ip){return String(ip).split('.').map(Number)}
+function ip4Num(ip){const a=ip4Parts(ip);if(a.length!==4||a.some(x=>!Number.isInteger(x)||x<0||x>255))return null;return (((a[0]<<24)>>>0)|((a[1]<<16)>>>0)|((a[2]<<8)>>>0)|a[3])>>>0}
+function ip4Text(n){return [(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.')}
+function mask4(pre){return pre===0?0:(0xffffffff<<(32-pre))>>>0}
+function cidrInfo(c){const m=String(c||'').match(/^\s*(\d+\.\d+\.\d+\.\d+)\/(\d{1,2})\s*$/);if(!m)return null;const ip=ip4Num(m[1]),pre=+m[2];if(ip===null||pre<0||pre>32)return null;const mask=mask4(pre),network=(ip&mask)>>>0,size=2**(32-pre),broadcast=(network+size-1)>>>0;let first=pre<=30?network+1:network,last=pre<=30?broadcast-1:broadcast;let usable=pre<=30?Math.max(0,size-2):1;return {pre,mask,network,size,broadcast,first,last,usable,networkText:ip4Text(network),broadcastText:ip4Text(broadcast)}}
+function renderSubnetting(){const rows=state.ipPlan||[];if(!rows.length){$('subnetSummary').innerHTML='';$('subnetTable').innerHTML='<div class="empty">No hay IP Planning disponible para rectificar. El módulo no crea ni modifica subredes.</div>';return}let valid=0,issues=[];const checks=rows.map(r=>{const c=cidrInfo(r.cidr);let ok=true,why=[];if(!c){ok=false;why.push('CIDR inválido')}else{if(r.gateway!==ip4Text(c.network+1)){ok=false;why.push('gateway no coincide con red+1')}if(r.first!==ip4Text(c.network+2)){ok=false;why.push('primer host de usuarios no coincide')}if(r.last!==ip4Text(c.broadcast-1)){ok=false;why.push('último host no coincide')}if(r.broadcast!==c.broadcastText){ok=false;why.push('broadcast incorrecto')}if(Number(r.usable)!==c.usable){ok=false;why.push('capacidad utilizable incorrecta')}if(Number(r.free)!==c.usable-1-Number(r.users)){ok=false;why.push('IP libres no coincide con capacidad-gateway-usuarios')}if((ip4Num(r.cidr.split('/')[0])>>>0)!==c.network){ok=false;why.push('dirección de red no está alineada con máscara')}}if(ok)valid++;else issues.push(`#${r.id}: ${why.join(', ')}`);return {...r,c,ok,why}});for(let i=0;i<checks.length;i++)for(let j=i+1;j<checks.length;j++){const a=checks[i],b=checks[j];if(a.c&&b.c&&a.c.network<=b.c.broadcast&&b.c.network<=a.c.broadcast){a.ok=b.ok=false;a.why.push('solapamiento');b.why.push('solapamiento');issues.push(`Solapamiento entre #${a.id} y #${b.id}`)}}const finalOk=checks.every(x=>x.ok);$('subnetSummary').innerHTML=`<div class="stat"><span class="kpi">Subredes revisadas</span><b>${checks.length}</b></div><div class="stat"><span class="kpi">Correctas</span><b>${checks.filter(x=>x.ok).length}</b></div><div class="stat"><span class="kpi">Con observaciones</span><b>${checks.filter(x=>!x.ok).length}</b></div><div class="stat"><span class="kpi">Resultado</span><b class="${finalOk?'ok':'bad'}">${finalOk?'CORRECTO':'REVISAR'}</b></div>`;$('subnetTable').innerHTML='<div style="overflow:auto"><table><thead><tr><th>#</th><th>Edificio</th><th>Piso</th><th>Red</th><th>Máscara</th><th>Gateway</th><th>1er usuario</th><th>Último</th><th>Broadcast</th><th>Usables</th><th>Libres</th><th>Estado</th></tr></thead><tbody>'+checks.map(x=>`<tr><td>${x.id}</td><td>${x.building}</td><td>${x.zone}</td><td class=mono>${x.cidr}</td><td class=mono>${x.c?ip4Text(x.c.mask):'—'}</td><td class=mono>${x.gateway}</td><td class=mono>${x.first}</td><td class=mono>${x.last}</td><td class=mono>${x.broadcast}</td><td>${x.usable}</td><td>${x.free}</td><td class="${x.ok?'verify-ok':'verify-bad'}">${x.ok?'✓ CORRECTO':('✗ '+x.why.join('; '))}</td></tr>`).join('')+'</tbody></table></div>'+(!finalOk?`<div class="notice warning"><b>Observaciones:</b><br>${issues.map(esc).join('<br>')}</div>`:'<div class="notice">El subnetting existente coincide con la lógica de VLSM y no requiere cambios.</div>')}
+function renderConfigContext(){const p=currentProject(),rows=state.ipPlan||[];if(!p){$('configContext').textContent='No hay proyecto actual.';return}if(rows.length){const r=rows[0],c=cidrInfo(r.cidr);if(c){$('cfgHost').value=$('cfgHost').value||`NETAUTO-${r.building}-${r.zone}`;$('cfgVlan').value=state.vlans[0]?.id||$('cfgVlan').value;$('cfgVlanName').value=state.vlans[0]?.name||r.purpose||$('cfgVlanName').value;$('cfgGw').value=r.gateway;$('cfgNet').value=r.cidr;$('configContext').innerHTML=`<b>Proyecto:</b> ${esc(p.name)} · primera subred disponible: <span class="mono">${esc(r.cidr)}</span> · gateway <span class="mono">${esc(r.gateway)}</span>. Se usan estos datos como base, sin modificar IP Planning.`}}else $('configContext').textContent=`Proyecto ${p.name} cargado, pero aún no hay subredes generadas.`}
+function netMaskFromCidr(c){const x=cidrInfo(c);return x?ip4Text(x.mask):''}
+function cfgValues(){return {v:$('cfgVendor').value,role:$('cfgRole').value,host:$('cfgHost').value.trim()||'NETAUTO-01',uplink:$('cfgUplink').value.trim(),access:$('cfgAccess').value.trim(),user:$('cfgUser').value.trim()||'netadmin',pass:$('cfgPass').value||'CAMBIAR_PASSWORD',rid:$('cfgRid').value.trim()||'1.1.1.1',vlan:+$('cfgVlan').value||10,vlanName:$('cfgVlanName').value.trim()||'USUARIOS',gw:$('cfgGw').value.trim(),net:$('cfgNet').value.trim(),area:$('cfgArea').value.trim()||'0.0.0.0',dns:$('cfgDns').value.trim()||'1.1.1.1',wan:$('cfgWan').value.trim()||'DHCP'} }
+function vendorVlan(){const x=cfgValues();return `${x.vlan} ${x.vlanName}`}
+function generateVendorConfig(){const x=cfgValues(),ci=cidrInfo(x.net),mask=ci?ip4Text(ci.mask):'';if(!ci||!x.gw){message('La red/prefijo y el gateway deben ser IPv4 válidos.','error');return}if(x.pass==='CAMBIAR_PASSWORD')$('configWarnings').innerHTML='<div class="notice warning"><b>Antes de aplicar:</b> cambia la contraseña de ejemplo y confirma modelo, versión, interfaz y direccionamiento del equipo.</div>';else $('configWarnings').innerHTML='<div class="notice">Revisa modelo/versión e interfaces antes de aplicar. La generación no ejecuta cambios.</div>';let c='';if(x.v.startsWith('Cisco')){c=`! Cisco IOS-XE · ${x.role}\nenable\nconfigure terminal\nhostname ${x.host}\nno ip domain-lookup\nip domain name netauto.local\nusername ${x.user} privilege 15 secret ${x.pass}\ncrypto key generate rsa modulus 2048\nip ssh version 2\nline vty 0 4\n login local\n transport input ssh\nexit\nspanning-tree mode rapid-pvst\nspanning-tree portfast bpduguard default\nvlan ${x.vlan}\n name ${x.vlanName}\nexit\n`;
+if(x.role==='Switch de acceso'){c+=`interface ${x.uplink}\n description UPLINK-NETAUTO\n switchport mode trunk\n switchport trunk allowed vlan ${x.vlan}\n no shutdown\nexit\ninterface range ${x.access}\n description ACCESS-USUARIOS\n switchport mode access\n switchport access vlan ${x.vlan}\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\nexit\n`;}else{c+=`interface Vlan${x.vlan}\n description ${x.vlanName}\n ip address ${x.gw} ${mask}\n no shutdown\nexit\nrouter ospf 1\n router-id ${x.rid}\n network ${ci.networkText} ${ip4Text((~ci.mask)>>>0)} area 0\nexit\n`;}c+=`end\nwrite memory\n\n! Verificación\nshow ip interface brief\nshow vlan brief\nshow interfaces trunk\nshow ip ospf neighbor`;
+}else if(x.v.startsWith('Huawei')){c=`system-view\nsysname ${x.host}\nvlan batch ${x.vlan}\nuser-interface vty 0 4\n authentication-mode aaa\n protocol inbound ssh\nquit\naaa\n local-user ${x.user} password simple ${x.pass}\n local-user ${x.user} privilege level 15\n local-user ${x.user} service-type ssh\nquit\nstelnet server enable\n`;
+if(x.role==='Switch de acceso'){c+=`interface ${x.uplink}\n port link-type trunk\n port trunk allow-pass vlan ${x.vlan}\nquit\ninterface range ${x.access}\n port link-type access\n port default vlan ${x.vlan}\nquit\n`;}else{c+=`interface Vlanif${x.vlan}\n ip address ${x.gw} ${mask}\nquit\nospf 1 router-id ${x.rid}\n area ${x.area}\n  network ${ci.networkText} ${ip4Text((~ci.mask)>>>0)}\nquit\nquit\n`;}c+=`return\n\n# Nota: para producción, reemplaza 'password simple' por un secreto irreversible generado en el equipo.\n# Verificación\ndisplay ip interface brief\ndisplay vlan\ndisplay stp\ndisplay ospf peer`;
+}else if(x.v.startsWith('FortiGate')){c=`config system global\n set hostname "${x.host}"\nend\nconfig system interface\n edit "port1"\n  set mode dhcp\n  set allowaccess ping https ssh\n next\n edit "${x.vlanName}"\n  set type vlan\n  set interface "port2"\n  set vlanid ${x.vlan}\n  set mode static\n  set ip ${x.gw} ${mask}\n  set allowaccess ping https ssh\n next\nend\nconfig firewall address\n edit "${x.vlanName}_NET"\n  set subnet ${ci.networkText} ${mask}\n next\nend\nconfig firewall policy\n edit 1\n  set name "${x.vlanName}_INTERNET"\n  set srcintf "${x.vlanName}"\n  set dstintf "port1"\n  set srcaddr "${x.vlanName}_NET"\n  set dstaddr "all"\n  set action accept\n  set schedule "always"\n  set service "ALL"\n  set logtraffic all\n  set nat enable\n next\nend\n\n# Verificación\nshow system interface\nget router info routing-table all\ndiagnose firewall iprope list`;
+}else{c=`/system identity set name="${x.host}"\n/user add name=${x.user} group=full password="${x.pass}"\n/ip service set ssh disabled=no\n/ip ssh set strong-crypto=yes\n/interface bridge add name=bridge-lan vlan-filtering=no\n/interface vlan add interface=bridge-lan name=vlan${x.vlan} vlan-id=${x.vlan}\n/ip address add address=${x.gw}/${ci.pre} interface=vlan${x.vlan} comment="${x.vlanName}"\n/ip firewall filter add chain=input action=accept connection-state=established,related comment="allow established"\n/ip firewall filter add chain=input action=drop connection-state=invalid comment="drop invalid"\n/ip firewall filter add chain=input action=accept protocol=tcp dst-port=22 comment="SSH"\n/ip firewall filter add chain=input action=drop in-interface-list=WAN comment="drop WAN input"\n/routing ospf instance add name=ospfv2 version=2 router-id=${x.rid}\n/routing ospf area add name=backbone area-id=0.0.0.0 instance=ospfv2\n/routing ospf interface-template add networks=${ci.networkText}/${ci.pre} area=backbone\n\n# Verificación\n/interface print\n/ip address print\n/routing ospf neighbor print\n/ip route print`}
+$('vendorConfigOut').textContent=c;window.lastVendorConfig=c;toast('Configuración real generada para '+x.v)}
+function downloadVendorConfig(){if(!window.lastVendorConfig)generateVendorConfig();if(!window.lastVendorConfig)return;const blob=new Blob([window.lastVendorConfig],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=safeFileName(($('cfgHost').value||'NetAuto')+'_'+$('cfgVendor').value.replace(/\W+/g,'_'))+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+function generateVendorConfigFor(v){const save=$('cfgVendor').value;$('cfgVendor').value=v;generateVendorConfig();const out=window.lastVendorConfig;$('cfgVendor').value=save;return out}
+function downloadVendorConfigPackage(){const files=['Cisco IOS-XE','Huawei VRP','FortiGate FortiOS 7.x','MikroTik RouterOS v7'].map(v=>({name:v.replace(/[^A-Za-z0-9]+/g,'_')+'.txt',data:generateVendorConfigFor(v)}));const blob=new Blob([zipStore(files)],{type:'application/zip'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=safeFileName(($('cfgHost').value||'NetAuto')+'_configuraciones_multivendor.zip');a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);toast('Paquete multivendor generado')}
+function renderCyberDefense(){const p=currentProject();const checks=[['Prompt injection','Tratar logs, correos y prompts externos como datos no confiables; nunca convertir texto en instrucciones de herramientas.','high'],['Robo de secretos','Redactar contraseñas, tokens, claves y SNMP communities antes de entregar datos al agente.','high'],['Cambios no autorizados','Separar análisis de ejecución; toda modificación debe requerir aprobación humana y registro.','high'],['Phishing generado por IA','SPF, DKIM, DMARC, MFA, filtros de enlaces/adjuntos y capacitación con reporte de mensajes.','medium'],['Automatización abusiva','Rate limiting, allowlist de comandos/APIs, cuentas con mínimo privilegio y auditoría.','medium'],['Segmentación','Separar gestión, usuarios, servidores, IoT/CCTV/VoIP y limitar movimiento lateral.','medium'],['Telemetría','Syslog/SIEM, SNMPv3, NTP, backups de configuración y alertas de cambios.','low'],['Recuperación','Backups offline/inmutables cuando sea posible y pruebas periódicas de restauración.','low']];$('cyberSummary').innerHTML=`<div class="stat"><span class="kpi">Controles</span><b>${checks.length}</b></div><div class="stat"><span class="kpi">Alta prioridad</span><b>${checks.filter(x=>x[2]==='high').length}</b></div><div class="stat"><span class="kpi">Proyecto</span><b>${p?esc(p.name):'—'}</b></div><div class="stat"><span class="kpi">Ejecución automática</span><b>NO</b></div>`;$('cyberControls').innerHTML=checks.map(x=>`<div class="def-card sev-${x[2]==='high'?'high':x[2]==='medium'?'med':'low'}"><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('')}
+function scanCyberText(){const s=$('cyberInput').value.trim();if(!s){message('Pega primero el contenido a analizar.','error');return}const l=s.toLowerCase(),f=[];const add=(t,e,a)=>f.push({t,e,a});if(/ignore (all|previous)|system prompt|developer message|jailbreak|override instructions|do not follow|reveal.*(password|secret|token)|api key|private key/.test(l))add('Posible prompt injection','Instrucciones para ignorar reglas, revelar contexto o modificar prioridades.','Aislar el texto como dato, no ejecutar herramientas y solicitar revisión humana.');if(/password|passwd|secret|token|api[_ -]?key|private key|snmp community/.test(l))add('Posible exposición de credenciales','Aparecen términos asociados a secretos.','Redactar secretos y rotarlos si fueron expuestos.');if(/curl .*\||wget .*\||powershell|cmd\.exe|base64|encoded command/.test(l))add('Comando o carga codificada','Se detectó patrón de ejecución/descarga/codificación.','No ejecutar; validar origen y analizar en un entorno controlado.');if(/disable (firewall|defender)|turn off security|bypass.*mfa|disable.*logging/.test(l))add('Intento de desactivar controles','El contenido pide reducir defensas.','Rechazar el cambio y mantener controles activos.');if(!f.length)add('Sin patrón de alto riesgo detectado','El analizador local no encontró patrones conocidos.','Esto no demuestra que el contenido sea seguro; revisar contexto, origen y autenticidad.');$('cyberOut').innerHTML=f.map(x=>`<div class="ai-card ${x.t.includes('Sin patrón')?'low':'high'}"><b>${x.t}</b><div class="muted">${x.e}</div><div style="margin-top:5px"><b>Respuesta defensiva:</b> ${x.a}</div></div>`).join('');toast('Contenido analizado sin ejecutar acciones')}
+
+
+/* ===== v1.2 Unified Equipment Automation + AI Cyber Defense ===== */
+function refreshDeviceSelectors(){
+ const sel=$('cfgDevice'), cy=$('cyberDevice'); if(!sel||!cy)return;
+ const opts=state.devices.map(d=>`<option value="${esc(d.id)}">${esc(d.host)} · ${esc(d.vendor)} · ${esc(d.role)}</option>`).join('');
+ sel.innerHTML='<option value="">— Seleccionar —</option>'+opts; cy.innerHTML='<option value="">— Seleccionar equipo —</option>'+opts;
+}
+function loadSelectedDevice(){
+ const id=$('cfgDevice').value,d=state.devices.find(x=>x.id===id); if(!d)return;
+ const v=d.vendor==='Fortinet'?'FortiGate FortiOS 7.x':d.vendor==='MikroTik'?'MikroTik RouterOS v7':d.vendor==='Huawei'?'Huawei VRP':'Cisco IOS-XE';
+ $('cfgVendor').value=v;$('cfgHost').value=d.host;$('cfgRole').value=d.role==='Access'?'Switch de acceso':d.role==='Core'?'Switch Core / L3':d.role==='Router'?'Router / OSPF':d.role==='Firewall'?'Firewall / borde':'Switch de acceso';
+ $('configContext').innerHTML=`<b>Equipo seleccionado:</b> ${esc(d.host)} · ${esc(d.vendor)} ${esc(d.model)} · gestión <span class="mono">${esc(d.ip)}</span>.`;
+}
+function cfgValues(){return {v:$('cfgVendor').value,role:$('cfgRole').value,host:$('cfgHost').value.trim()||'NETAUTO-01',uplink:$('cfgUplink').value.trim(),access:$('cfgAccess').value.trim(),user:$('cfgUser').value.trim()||'netadmin',pass:$('cfgPass').value||'CAMBIAR_PASSWORD',rid:$('cfgRid').value.trim()||'1.1.1.1',vlan:+$('cfgVlan').value||10,vlanName:$('cfgVlanName').value.trim()||'USUARIOS',gw:$('cfgGw').value.trim(),net:$('cfgNet').value.trim(),area:$('cfgArea').value.trim()||'0.0.0.0',dns:$('cfgDns').value.trim()||'1.1.1.1',wan:$('cfgWan').value.trim()||'DHCP'}}
+function preflightConfig(){
+ const x=cfgValues(),ci=cidrInfo(x.net),issues=[];
+ if(!ci)issues.push('Red/prefijo IPv4 inválido.');
+ if(!ip4Num(x.gw))issues.push('Gateway/IP de SVI inválido.');
+ if(ci&&ip4Num(x.gw)!==ci.network+1)issues.push('El gateway no coincide con red + 1 según el direccionamiento cargado.');
+ if(x.pass==='CAMBIAR_PASSWORD')issues.push('La contraseña es temporal: cámbiala antes de aplicar.');
+ if(!x.uplink)issues.push('Falta interfaz uplink.');
+ if(x.v.startsWith('FortiGate')&&x.role==='Firewall / borde'&&!x.wan)issues.push('Falta definición WAN.');
+ const ok=!issues.length;
+ $('configPreflight').innerHTML=`<div class="notice ${ok?'success':'warning'}"><b>${ok?'✓ LISTO PARA REVISIÓN FINAL':'⚠ REVISAR ANTES DE APLICAR'}</b>${issues.length?'<br>'+issues.map(esc).join('<br>'):'<br>Parámetros básicos coherentes. Aún debes confirmar modelo, firmware, interfaces y ventana de cambio.'}</div>`;
+ return ok;
+}
+function verificationFor(v){
+ if(v.startsWith('Cisco'))return ['show running-config','show ip interface brief','show vlan brief','show interfaces trunk','show spanning-tree','show ip ospf neighbor','show ip route'];
+ if(v.startsWith('Huawei'))return ['display current-configuration','display ip interface brief','display vlan','display port vlan','display stp','display ospf peer','display ip routing-table'];
+ if(v.startsWith('FortiGate'))return ['show system interface','get router info routing-table all','diagnose firewall iprope list','diagnose sys top','diagnose vpn tunnel list'];
+ return ['/interface print','/ip address print','/interface bridge vlan print','/routing ospf neighbor print','/ip route print','/ip firewall filter print'];
+}
+function generateVendorConfig(){
+ const x=cfgValues(),ci=cidrInfo(x.net),mask=ci?ip4Text(ci.mask):''; if(!ci||!ip4Num(x.gw)){message('Red/prefijo y gateway IPv4 son obligatorios y válidos.','error');return}
+ let c='';
+ if(x.v.startsWith('Cisco')){
+  c=`! NETAUTO PRO - Cisco IOS-XE\nenable\nconfigure terminal\nhostname ${x.host}\nno ip domain-lookup\nip domain name netauto.local\nusername ${x.user} privilege 15 secret ${x.pass}\ncrypto key generate rsa modulus 2048\nip ssh version 2\nline vty 0 4\n login local\n transport input ssh\nexit\nspanning-tree mode rapid-pvst\nvlan ${x.vlan}\n name ${x.vlanName}\nexit\n`;
+  if(x.role==='Switch de acceso') c+=`interface ${x.uplink}\n description UPLINK-NETAUTO\n switchport mode trunk\n switchport trunk allowed vlan ${x.vlan}\n no shutdown\nexit\ninterface range ${x.access}\n description USUARIOS-${x.vlan}\n switchport mode access\n switchport access vlan ${x.vlan}\n spanning-tree portfast\n spanning-tree bpduguard enable\n no shutdown\nexit\n`;
+  else c+=`interface Vlan${x.vlan}\n description ${x.vlanName}\n ip address ${x.gw} ${mask}\n no shutdown\nexit\nrouter ospf 1\n router-id ${x.rid}\n network ${ci.networkText} ${ip4Text((~ci.mask)>>>0)} area 0\nexit\n`;
+  c+=`end\nwrite memory\n\n! VERIFICACION\n${verificationFor(x.v).join('\n')}`;
+ } else if(x.v.startsWith('Huawei')){
+  c=`system-view\nsysname ${x.host}\nvlan batch ${x.vlan}\naaa\n local-user ${x.user} password irreversible-cipher ${x.pass}\n local-user ${x.user} privilege level 15\n local-user ${x.user} service-type ssh\nquit\nuser-interface vty 0 4\n authentication-mode aaa\n protocol inbound ssh\nquit\nstelnet server enable\n`;
+  if(x.role==='Switch de acceso') c+=`interface ${x.uplink}\n port link-type trunk\n port trunk allow-pass vlan ${x.vlan}\nquit\ninterface range ${x.access}\n port link-type access\n port default vlan ${x.vlan}\nquit\n`;
+  else c+=`interface Vlanif${x.vlan}\n ip address ${x.gw} ${mask}\nquit\nospf 1 router-id ${x.rid}\n area ${x.area}\n  network ${ci.networkText} ${ip4Text((~ci.mask)>>>0)}\nquit\n`;
+  c+=`return\n\n# VERIFICACION\n${verificationFor(x.v).join('\n')}`;
+ } else if(x.v.startsWith('FortiGate')){
+  c=`config system global\n set hostname "${x.host}"\nend\nconfig system interface\n edit "port1"\n  set mode ${x.wan.toUpperCase()==='DHCP'?'dhcp':'static'}\n  set allowaccess ping https ssh\n next\n edit "VLAN_${x.vlan}"\n  set type vlan\n  set interface "port2"\n  set vlanid ${x.vlan}\n  set mode static\n  set ip ${x.gw} ${mask}\n  set allowaccess ping https ssh\n next\nend\nconfig firewall address\n edit "NET_${x.vlan}"\n  set subnet ${ci.networkText} ${mask}\n next\nend\nconfig firewall policy\n edit 0\n  set name "VLAN_${x.vlan}_OUT"\n  set srcintf "VLAN_${x.vlan}"\n  set dstintf "port1"\n  set srcaddr "NET_${x.vlan}"\n  set dstaddr "all"\n  set action accept\n  set schedule "always"\n  set service "ALL"\n  set nat enable\n  set logtraffic all\n next\nend\n\n# VERIFICACION\n${verificationFor(x.v).join('\n')}`;
+ } else {
+  c=`/system identity set name="${x.host}"\n/ip service set ssh disabled=no\n/ip ssh set strong-crypto=yes\n/interface bridge add name=bridge-lan vlan-filtering=no\n/interface vlan add interface=bridge-lan name=vlan${x.vlan} vlan-id=${x.vlan}\n/ip address add address=${x.gw}/${ci.pre} interface=vlan${x.vlan} comment="${x.vlanName}"\n/ip firewall filter add chain=input action=accept connection-state=established,related comment="allow-established"\n/ip firewall filter add chain=input action=drop connection-state=invalid comment="drop-invalid"\n/ip firewall filter add chain=input action=accept protocol=tcp dst-port=22 comment="allow-ssh"\n/ip firewall filter add chain=input action=drop in-interface-list=WAN comment="drop-wan-input"\n/routing ospf instance add name=ospfv2 version=2 router-id=${x.rid}\n/routing ospf area add name=backbone area-id=0.0.0.0 instance=ospfv2\n/routing ospf interface-template add networks=${ci.networkText}/${ci.pre} area=backbone\n\n# VERIFICACION\n${verificationFor(x.v).join('\n')}`;
+ }
+ $('vendorConfigOut').textContent=c;window.lastVendorConfig=c;$('verificationBox').innerHTML=verificationFor(x.v).map(v=>`<div class="def-card"><b>${esc(v)}</b><p>Ejecutar después del cambio y comparar estado con el diseño.</p></div>`).join('');
+ $('configWarnings').innerHTML=x.pass==='CAMBIAR_PASSWORD'?'<div class="notice warning"><b>Seguridad:</b> cambia la contraseña temporal antes de aplicar.</div>':'<div class="notice success">Configuración generada. No se ejecuta automáticamente.</div>';
+ preflightConfig();toast('Configuración generada para '+x.v);
+}
+function generateHardening(){
+ const x=cfgValues(); let c='';
+ if(x.v.startsWith('Cisco'))c=`! HARDENING CISCO IOS-XE\nno ip http server\nno ip http secure-server\nservice timestamps log datetime msec\nip ssh version 2\nline vty 0 4\n transport input ssh\n login local\nexit\nspanning-tree portfast bpduguard default\n! Verificar AAA/MFA/RBAC y aplicar ACL de administración según la red real.`;
+ else if(x.v.startsWith('Huawei'))c=`# HARDENING HUAWEI VRP\nundo telnet server enable\nstelnet server enable\nuser-interface vty 0 4\n protocol inbound ssh\n authentication-mode aaa\nquit\n# Mantener AAA/RBAC y restringir administración a la red de gestión.`;
+ else if(x.v.startsWith('FortiGate'))c=`config system global\n set admin-sport 8443\n set admin-ssh-port 22\nend\nconfig system interface\n edit "port1"\n  set allowaccess ping\n next\nend\n# Restringir administración a la interfaz/red de gestión mediante trusted hosts/políticas.`;
+ else c=`/ip service set telnet disabled=yes\n/ip service set ftp disabled=yes\n/ip service set www disabled=yes\n/ip service set api disabled=yes\n/ip service set api-ssl disabled=yes\n/ip ssh set strong-crypto=yes\n# Restringir SSH mediante firewall a la red de gestión.`;
+ $('vendorConfigOut').textContent=(window.lastVendorConfig?window.lastVendorConfig+'\n\n':'')+'===== HARDENING =====\n'+c;window.lastVendorConfig=$('vendorConfigOut').textContent;toast('Bloque defensivo generado');
+}
+function copyVendorConfig(){if(!window.lastVendorConfig)generateVendorConfig();if(!window.lastVendorConfig)return;navigator.clipboard?.writeText(window.lastVendorConfig).then(()=>toast('Configuración copiada')).catch(()=>message('El navegador no permitió copiar automáticamente. Usa Ctrl+C.','error'))}
+function renderConfigContext(){refreshDeviceSelectors();const p=currentProject(),rows=state.ipPlan||[];if(!p){$('configContext').textContent='No hay proyecto actual.';return}if(rows.length){const r=rows[0];$('cfgVlan').value=state.vlans[0]?.id||$('cfgVlan').value;$('cfgVlanName').value=state.vlans[0]?.name||r.purpose||$('cfgVlanName').value;$('cfgGw').value=r.gateway;$('cfgNet').value=r.cidr;$('configContext').innerHTML=`<b>Proyecto:</b> ${esc(p.name)} · primera subred del IP Planning: <span class="mono">${esc(r.cidr)}</span> · gateway <span class="mono">${esc(r.gateway)}</span>. Solo lectura.`}}
+function generateCyberHardening(){const id=$('cyberDevice').value,d=state.devices.find(x=>x.id===id);if(!d){message('Selecciona un equipo.','error');return}const map={Cisco:'Cisco IOS-XE',Huawei:'Huawei VRP',Fortinet:'FortiGate FortiOS 7.x',MikroTik:'MikroTik RouterOS v7'};const v=map[d.vendor]||'Cisco IOS-XE';$('cfgVendor').value=v;$('cfgHost').value=d.host;$('cfgRole').value=d.role==='Firewall'?'Firewall / borde':d.role==='Router'?'Router / OSPF':d.role==='Core'?'Switch Core / L3':'Switch de acceso';generateHardening();$('cyberActionOut').innerHTML=`<div class="notice success"><b>Defensa generada para ${esc(d.host)}</b><br>Fabricante: ${esc(v)} · IP de gestión: <span class="mono">${esc(d.ip)}</span><br>El bloque está listo para revisión y aplicación manual controlada.</div><pre class="config-box">${esc($('vendorConfigOut').textContent.split('===== HARDENING =====').pop())}</pre>`}
+function auditCyberProject(){const findings=[];state.devices.forEach(d=>{if(!d.model||/no especificado/i.test(d.model))findings.push(`${d.host}: falta modelo/versión para validar sintaxis exacta.`);if(!d.ip||!ip4Num(d.ip))findings.push(`${d.host}: IP de gestión inválida o ausente.`)});if(!state.ipPlan.length)findings.push('No hay IP Planning disponible para correlacionar controles.');if(!state.vlans.length)findings.push('No hay VLAN registradas para segmentación.');$('cyberActionOut').innerHTML=`<div class="notice ${findings.length?'warning':'success'}"><b>${findings.length?'Hallazgos':'Sin hallazgos básicos'}</b>${findings.length?'<br>'+findings.map(esc).join('<br>'):'<br>El inventario, direccionamiento y segmentación básicos están presentes. Falta validar configuración real del equipo.'}</div>`}
+
+function init(){renderAll();const p=currentProject();if(p)fillProject(p)}
+init();
+
+/* ===== v1.3 agent + production-oriented configuration overrides ===== */
+(function(){
+ const originalRenderCyberDefense=window.renderCyberDefense;
+ window.netautoAgentMode='chat';
+ window.toggleNetAutoAgent=function(){document.getElementById('netautoAiPanel')?.classList.toggle('open');if(document.getElementById('netautoAiPanel')?.classList.contains('open')){agentRefreshAudit();}};
+ window.setAgentMode=function(mode){window.netautoAgentMode=mode;['chat','audit','guard'].forEach(m=>{const b=document.getElementById('agentMode'+m.charAt(0).toUpperCase()+m.slice(1));if(b)b.classList.toggle('active',m===mode)});$('netautoAiChat').style.display=mode==='chat'?'block':'none';$('netautoAiAudit').style.display=mode==='audit'?'block':'none';$('netautoAiGuard').style.display=mode==='guard'?'block':'none';if(mode==='audit')agentRefreshAudit();if(mode==='guard')agentRefreshGuard();};
+ window.agentContext=function(){const p=currentProject();return {project:p?{name:p.name,env:p.env,buildings:p.buildings,zones:p.zones,users:p.users,cidr:p.cidr}:null,devices:state.devices.map(d=>({host:d.host,ip:d.ip,vendor:d.vendor,model:d.model,role:d.role})),vlans:state.vlans.map(v=>({id:v.id,name:v.name,network:v.network,gateway:v.gateway})),subnets:(state.ipPlan||[]).map(r=>({building:r.building,zone:r.zone,cidr:r.cidr,gateway:r.gateway,users:r.users})),topologyCount:(state.topology||[]).length};};
+ window.agentInsertContext=function(){const c=agentContext();$('netautoAiInput').value='Contexto actual:\n'+JSON.stringify(c,null,2);}; window.agentQuick=function(q){$('netautoAiInput').value=q;agentRun();}; document.addEventListener('keydown',function(e){if(e.key==='Escape')document.getElementById('netautoAiPanel')?.classList.remove('open');});
+ window.agentClear=function(){$('netautoAiInput').value='';$('netautoAiChat').innerHTML='<div class="ai-msg bot"><b>Agente:</b> Esperando una consulta.</div>';};
+ function riskScan(t){const s=String(t||'').toLowerCase();const patterns=[['Prompt injection',['ignore previous','ignore all instructions','system prompt','reveal your instructions','disregard instructions','act as developer']],['Secretos',['password=','passwd=','api_key','apikey','token=','secret=','private key','ssh key']],['Ejecución peligrosa',['delete all','erase configuration','format flash','reload in','write erase','factory reset','disable firewall','disable logging']],['Exfiltración',['send credentials','upload credentials','copy secrets','export passwords','send the config to','paste the token']]];const hits=[];patterns.forEach(([name,arr])=>{const found=arr.filter(x=>s.includes(x));if(found.length)hits.push({name,found})});return hits;}
+ window.agentRun=function(){const input=$('netautoAiInput').value.trim();if(!input)return;const hits=riskScan(input);const c=agentContext();let answer='';if(hits.length){answer='<div class="ai-risk"><b>⚠ Contenido no confiable detectado.</b><br>'+hits.map(h=>esc(h.name)+': '+h.found.map(esc).join(', ')).join('<br>')+'</div><b>Acción segura:</b> no convertir estas instrucciones en comandos ni ejecutarlas. Revisar manualmente el origen y aplicar allowlist/aprobación.';}else{const q=input.toLowerCase();if(q.includes('equipo')||q.includes('switch')||q.includes('router')||q.includes('firewall'))answer='Puedo trabajar sobre el inventario. Equipos registrados: <b>'+c.devices.length+'</b>. Selecciona el equipo en Centro de Equipos y Automatización para generar su bloque específico.';else if(q.includes('ip')||q.includes('subred')||q.includes('vlsm'))answer='IP Planning está bloqueado y se trata como fuente de solo lectura. Subredes disponibles: <b>'+c.subnets.length+'</b>. Puedo verificar consistencia sin modificarlo.';else if(q.includes('seguridad')||q.includes('ciber')||q.includes('hardening'))answer='La defensa se divide en identidad, gestión segura, segmentación, logging, backups y protección del agente. Puedo generar hardening por fabricante, pero requiere revisión humana antes de aplicar.';else if(q.includes('topolog'))answer='Topología está bloqueada y se utiliza únicamente como contexto estructural. Enlaces registrados: <b>'+c.topologyCount+'</b>.';else answer='Consulta procesada en modo seguro. Proyecto: <b>'+(c.project?esc(c.project.name):'sin proyecto')+'</b>. Puedo ayudarte a auditar equipos, configuración, subnetting y ciberdefensa sin modificar IP Planning ni Topología.';}
+ $('netautoAiChat').insertAdjacentHTML('beforeend','<div class="ai-msg user"><b>Tú:</b> '+esc(input)+'</div><div class="ai-msg bot"><b>Agente:</b> '+answer+'</div>');$('netautoAiChat').scrollTop=$('netautoAiChat').scrollHeight;$('netautoAiInput').value='';};
+ window.agentRefreshAudit=function(){const c=agentContext(),f=[];c.devices.forEach(d=>{if(!d.model||/no especificado/i.test(d.model))f.push(d.host+': modelo/versión faltante');if(!ip4Num(d.ip))f.push(d.host+': IP de gestión inválida');});if(!c.project)f.push('No existe proyecto activo');if(!c.subnets.length)f.push('No hay subredes para correlación');if(!c.vlans.length)f.push('No hay VLAN registradas');$('netautoAiAudit').innerHTML='<div class="command-stage"><h4>Auditoría operativa</h4><p>Hallazgos básicos: <b>'+f.length+'</b></p>'+ (f.length?f.map(x=>'<div class="ai-risk">⚠ '+esc(x)+'</div>').join(''):'<div class="ai-ok">✓ No se encontraron faltantes básicos en el contexto local.</div>')+'</div>';};
+ window.agentRefreshGuard=function(){$('netautoAiGuard').innerHTML='<div class="command-stage"><h4>Guardia IA activa</h4><p>Protecciones: prompt injection · secretos · exfiltración · comandos destructivos · aprobación humana.</p><div class="ai-ok">✓ El agente no convierte texto externo en acciones de infraestructura.</div><div class="ai-ok">✓ Las configuraciones generadas se mantienen como previsualización hasta revisión.</div><div class="ai-risk">⚠ Nunca pegues contraseñas, tokens, claves privadas o credenciales reales en el agente.</div></div>';};
+ window.generateHardening=function(){const x=cfgValues();let c='';const mg=$('cfgMgmtNet')?.value.trim()||'';if(!mg){$('configWarnings').innerHTML='<div class="notice warning"><b>Falta red de administración.</b> Define la subred CIDR desde la cual se permitirá la gestión SSH/HTTPS antes de generar hardening.</div>';message('Define la red de administración permitida.','error');return}
+ const m=cidrInfo(mg),mask=m?ip4Text(m.mask):'';if(!m){message('La red de administración no es un CIDR IPv4 válido.','error');return}
+ if(x.v.startsWith('Cisco'))c=`! HARDENING CISCO IOS-XE\nip access-list standard NETAUTO-MGMT\n permit ${m.networkText}\n deny any log\nexit\nno ip http server\nno ip http secure-server\nservice timestamps log datetime msec\nip ssh version 2\nline vty 0 4\n access-class NETAUTO-MGMT in\n transport input ssh\n login local\n exec-timeout 10 0\nexit\nspanning-tree portfast bpduguard default\n! Aplicar AAA/RADIUS/TACACS+ y SNMPv3 según la infraestructura.`;
+ else if(x.v.startsWith('Huawei'))c=`# HARDENING HUAWEI VRP\nacl number 2000\n rule 5 permit source ${m.networkText} ${mask}\n rule 100 deny\nquit\nundo telnet server enable\nstelnet server enable\nuser-interface vty 0 4\n acl 2000 inbound\n protocol inbound ssh\n authentication-mode aaa\nquit\n# Mantener AAA/RBAC, NTP y logging centralizado.`;
+ else if(x.v.startsWith('FortiGate'))c=`config system admin\n edit "admin"\n  set trusthost1 ${m.networkText} ${mask}\n next\nend\nconfig system interface\n edit "port1"\n  set allowaccess ping\n next\nend\nconfig system global\n set admin-ssh-port 22\nend\n# Mantener administración HTTPS/SSH solo desde la red de gestión.`;
+ else c=`/ip service set telnet disabled=yes\n/ip service set ftp disabled=yes\n/ip service set www disabled=yes\n/ip service set api disabled=yes\n/ip service set api-ssl disabled=yes\n/ip ssh set strong-crypto=yes\n/ip firewall address-list add list=NETAUTO-MGMT address=${m.networkText}/${m.pre} comment="red de administracion"\n/ip firewall filter add chain=input action=accept protocol=tcp dst-port=22 src-address-list=NETAUTO-MGMT comment="allow SSH from management"\n/ip firewall filter add chain=input action=drop protocol=tcp dst-port=22 comment="drop SSH outside management"\n# Revisar el orden de reglas existente antes de insertar en producción.`;
+ $('vendorConfigOut').textContent=c;window.lastVendorConfig=c;$('configWarnings').innerHTML='<div class="notice warning"><b>Hardening listo para revisión.</b> Es específico para la familia seleccionada, pero debes confirmar versión, modelo, orden de ACL/firewall y cuenta administrativa antes de aplicarlo.</div>';toast('Hardening defensivo generado');};
+ window.preflightConfig=function(){const x=cfgValues(),issues=[];if(!x.host)issues.push('Hostname vacío.');if(!ip4Num(x.gw))issues.push('Gateway/SVI inválido.');const ci=cidrInfo(x.net);if(!ci)issues.push('Red/prefijo IPv4 inválido.');if(x.pass==='CAMBIAR_PASSWORD')issues.push('La contraseña es temporal: cámbiala antes de aplicar.');if(x.v.startsWith('FortiGate')&&!x.wan)issues.push('Falta WAN.');if(x.v.startsWith('Cisco')||x.v.startsWith('Huawei')){if(!x.uplink)issues.push('Falta uplink.');if(x.role==='Switch de acceso'&&!x.access)issues.push('Falta rango de acceso.');}const ok=!issues.length;$('configPreflight').innerHTML='<div class="notice '+(ok?'success':'warning')+'"><b>'+(ok?'✓ PREVALIDACIÓN BÁSICA SUPERADA':'⚠ REVISAR')+'</b><br>'+(issues.length?issues.map(esc).join('<br>'):'Datos básicos coherentes. Falta validación específica del modelo/firmware y prueba de laboratorio antes de producción.')+'</div>';return ok;};
+})();
+</script></body></html>
