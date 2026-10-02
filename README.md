@@ -1,7 +1,7 @@
 # Herramienta de Redes WAN — Corte 2
 
 * **Estudiante:** Jhoan Alfredo Sanchez Cabrera
-* **Enlace del repositorio:** (Aquí pondrás el link de tu GitHub más adelante)
+* **Enlace del repositorio:** https://github.com/johanc9a-bit/NetAuto-Pro-Corte2
 
 ## Tabla de Evidencias
 
